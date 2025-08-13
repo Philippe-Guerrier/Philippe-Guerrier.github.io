@@ -7,7 +7,9 @@ permalink: /projects/
 
 > A few representative repos. Full list on my [GitHub](https://github.com/Philippe-Guerrier) and [portfolio](https://sites.google.com/view/philippeguerrier/home).
 
-<div class="navbar">[Home](/) · [About](/about/) · [Contact](/contact/)</div>
+[Home](/) · [About](/about/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
+
+# <div class="navbar">[Home](/) · [About](/about/) · [Contact](/contact/)</div>
 
 <div class="card-grid">
 <div class="card">
