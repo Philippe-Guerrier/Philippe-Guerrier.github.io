@@ -1,2 +1,24 @@
-{% seo %}
- 
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    {% seo %}
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | default: 1 | relative_url }}">
+  </head>
+  <body>
+    <header class="page-header" role="banner">
+      <h1 class="project-name">{{ site.title }}</h1>
+      <h2 class="project-tagline">{{ site.description }}</h2>
+    </header>
+
+    <main class="main-content" role="main">
+      {{ content }}
+    </main>
+
+    <footer class="site-footer">
+      <span class="site-footer-credits">© {{ site.time | date: '%Y' }} {{ site.title }}</span>
+    </footer>
+  </body>
+</html>
