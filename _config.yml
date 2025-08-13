@@ -31,3 +31,4 @@ defaults:
 # Optional: atom feed title
 feed:
   path: feed.xml
+
