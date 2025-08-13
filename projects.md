@@ -13,3 +13,4 @@ permalink: /projects/
 ### Local Music Recommendation System
 - Lightweight recommender; fully on-device.
 - Repo: <https://github.com/Philippe-Guerrier/music_rec_system>
+
