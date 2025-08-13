@@ -11,9 +11,9 @@ title: Home
 - **GitHub** → <https://github.com/Philippe-Guerrier>
 
 ## Highlights
-- **PulseFlow** — Offline music identifier & recommender (local CLAP + FAISS).  
+- **PulseFlow** - Offline music identifier & recommender (local CLAP + FAISS).  
   Repo: <https://github.com/Philippe-Guerrier/pulseflow-ai-offline-music-recommender>
-- **Local Music Recs** — Lightweight on-device recommender.  
+- **Local Music Recs** - Lightweight on-device recommender.  
   Repo: <https://github.com/Philippe-Guerrier/music_rec_system>
 
 ## Contact
