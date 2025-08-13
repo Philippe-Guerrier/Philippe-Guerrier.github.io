@@ -19,3 +19,4 @@ I enjoy offline‑first ML (resource‑aware, explainable components), clean int
 
 ### Interests
 AI for music/media, ML systems, robotics, AI in medicine, and quantum/optimization.
+
