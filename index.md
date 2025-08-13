@@ -21,3 +21,4 @@ permalink: /
 - Offline, privacy‑preserving AI (audio/music)  
 - Data/ML engineering (pipelines, Airflow, SQL, Python)  
 - AI in medicine & pharma, and quantum/optimization
+
