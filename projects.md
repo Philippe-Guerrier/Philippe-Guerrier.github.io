@@ -11,13 +11,13 @@ permalink: /projects/
 
 <div class="card-grid">
 <div class="card">
-<h3>PULSEFLOW AI — Offline music ID & recommender</h3>
+<h3>PULSEFLOW AI - Offline music ID & recommender</h3>
 <p>Local CLAP embeddings + FAISS for song ID and smart transitions; optional LLM notes. Offline, privacy‑first.</p>
 <p><a href="https://github.com/Philippe-Guerrier/pulseflow-ai-offline-music-recommender">Repo</a></p>
 </div>
 
 <div class="card">
-<h3>Scrape‑LLM (local) — hybrid scraper + vision</h3>
+<h3>Scrape‑LLM (local) - hybrid scraper + vision</h3>
 <p>Extracts article metadata, concise summaries, and example images; runs via Ollama/HF small models with a one‑click GUI.</p>
 <p><a href="https://github.com/Philippe-Guerrier/scrape-llm">Repo</a></p>
 </div>
