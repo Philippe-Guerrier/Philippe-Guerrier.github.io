@@ -1,7 +1,33 @@
 title: "Philippe Guerrier"
-description: "Data: Data Science, ML, Business, Offline AI, Music ML & AI for Medicine"
+description: "Data: Data Science, ML, Business, ML Engineering, Quantum, Offline AI, Music ML & AI for Medicine"
 url: "https://philippe-guerrier.github.io"
+lang: en
+email: "philippeguerrier01@gmail.com"
+author: "Philippe Guerrier"
 
-theme: jekyll-theme-cayman
+# Theme via remote_theme so you can customize includes/layouts
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
 
-github_username: Philippe-Guerrier
+# Social/SEO extras for jekyll-seo-tag
+social:
+  links:
+    - https://github.com/Philippe-Guerrier
+    - https://www.linkedin.com/in/philippe-guerrier1/
+    - https://sites.google.com/view/philippeguerrier/home
+
+# Defaults for pages
+defaults:
+  - scope: { path: "" }
+    values:
+      layout: default
+      image: /assets/og-default.png
+      author: "Philippe Guerrier"
+
+# Optional: atom feed title
+feed:
+  path: feed.xml
