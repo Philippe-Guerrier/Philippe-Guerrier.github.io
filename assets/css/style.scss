@@ -1,0 +1,13 @@
+---
+---
+@import "{{ site.theme }}";
+
+// Tiny visual polish
+:root{ --pgw: 980px }
+.page-header .project-name{font-weight:800}
+.main-content{max-width:var(--pgw)}
+.main-content p{max-width:68ch}
+.navbar{margin:0 0 1rem}
+.navbar a{margin-right:14px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{border:1px solid #eaeaea;border-radius:14px;padding:14px}
