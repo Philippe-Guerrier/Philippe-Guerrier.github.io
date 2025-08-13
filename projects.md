@@ -9,7 +9,7 @@ permalink: /projects/
 
 [Home](/) · [About](/about/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
-# <div class="navbar">[Home](/) · [About](/about/) · [Contact](/contact/)</div>
+<!--- <div class="navbar">[Home](/) · [About](/about/) · [Contact](/contact/)</div> --->
 
 <div class="card-grid">
 <div class="card">
