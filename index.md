@@ -1,20 +1,23 @@
 ---
 layout: default
 title: Home
+permalink: /
 ---
 # Philippe Guerrier
 
-**Data Analyst/Scientist** · building ML use case and trying to learn about building offline AI tools (music ID + smart playlists) and many subjects as applied AI for medicine.
+**Data & Analytics Engineer** — offline AI for music, ML engineering, and applied AI in medicine. Currently **Data Analyst @ Deezer** (Apr 2025–present). Past roles at **Uber** (Ops Analytics) and **Amazon** (BI/DG). Multilingual (FR/EN/DE).
 
-- **Portfolio** → <https://sites.google.com/view/philippeguerrier/home>
-- **LinkedIn** → <https://www.linkedin.com/in/philippe-guerrier1/>
-- **GitHub** → <https://github.com/Philippe-Guerrier>
+[About](/about/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
 ## Highlights
-- **PulseFlow** - Offline music identifier & recommender (local CLAP + FAISS).  
+- **PulseFlow AI** — Offline music identifier & recommender (CLAP embeddings + FAISS) with smooth transitions. Runs fully on‑device.  
   Repo: <https://github.com/Philippe-Guerrier/pulseflow-ai-offline-music-recommender>
-- **Local Music Recs** - Lightweight on-device recommender.  
-  Repo: <https://github.com/Philippe-Guerrier/music_rec_system>
+- **Scrape‑LLM (local)** — Lightweight scraper + local LLM/vision for concise page summaries & image sampling (Ollama/HF).  
+  Repo: <https://github.com/Philippe-Guerrier/scrape-llm>
+- **Market Sentiment Dashboard** — Real‑time news+Reddit pipeline with parallel sentiment and short write‑ups.  
+  Repo: <https://github.com/Philippe-Guerrier/Real-Time-AI-Powered-Market-Sentiment-Dashboard>
 
-## Contact
-- Email: philippeguerrier01@gmail.com
+## Focus areas
+- Offline, privacy‑preserving AI (audio/music)  
+- Data/ML engineering (pipelines, Airflow, SQL, Python)  
+- AI in medicine & pharma, and quantum/optimization
