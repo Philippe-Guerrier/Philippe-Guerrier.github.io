@@ -12,3 +12,13 @@
 .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .card{border:1px solid #eaeaea;border-radius:14px;padding:14px}
 
+
+/* Visually mark the current page in the navbar */
+.navbar a[aria-current="page"] { text-decoration: underline; }
+
+/* Softer images inside project pages */
+.project img { box-shadow: 0 6px 20px rgba(0,0,0,.08); border-radius: 12px; }
+
+/* Make code blocks a bit nicer (optional) */
+pre, code { background:#f8fafc; border-radius:8px; padding:.2em .4em }
+
