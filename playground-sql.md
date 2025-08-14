@@ -227,10 +227,17 @@ html[data-theme="dark"] #run:focus {
 
 
 <script>
-(async function(){
-  const SQL = await initSqlJs({ locateFile: f => 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/' + f });
-  const db = new SQL.Database();
-  const out = document.getElementById('out');
+(async function () {
+  const SQL = await initSqlJs({
+    locateFile: f => 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/' + f
+  });
+
+  const db    = new SQL.Database();
+  const out   = document.getElementById('out');
+  const csvEl = document.getElementById('csv');
+  const sqlEl = document.getElementById('sql');
+  const loadBtn = document.getElementById('load');
+  const runBtn  = document.getElementById('run');
 
   function csvToTable(csv){
     const lines = csv.trim().split(/\r?\n/).map(l => l.split(','));
@@ -255,40 +262,40 @@ html[data-theme="dark"] #run:focus {
     }
   }
 
-  document.getElementById('load').onclick = () => {
-    csvToTable(document.getElementById('csv').value);
+  // Load + auto-run (after load)
+  loadBtn.onclick = () => {
+    csvToTable(csvEl.value);
     out.textContent = 'Loaded table data';
-    document.getElementById('run').click(); 
+    runBtn.click();
   };
-  document.getElementById('run').onclick = () => run(document.getElementById('sql').value);
-  <script>
-/* --- Shareable SQL ---------------------------------------------------- */
-(function(){
-  const sqlBox = document.getElementById('sql');
-  const runBtn = document.getElementById('run');
+  runBtn.onclick = () => run(sqlEl.value);
 
-  // 1) Load SQL from URL (?q=base64)
+  /* --- Shareable SQL ---------------------------------------------------- */
+
+  // 1) Prefill SQL from URL (?q=base64)
   try {
     const q = new URLSearchParams(location.search).get('q');
-    if (q) {
-      sqlBox.value = atob(decodeURIComponent(q));
-      // If table already loaded, auto-run
-      // (your existing Load button already calls run after loading)
-    }
-  } catch (e) { /* ignore bad payloads */ }
+    if (q) sqlEl.value = atob(decodeURIComponent(q));
+  } catch (_) { /* ignore malformed payloads */ }
 
-  // 2) Share button
-  const share = document.createElement('button');
-  share.textContent = 'Share query link';
-  share.style.marginLeft = '8px';
-  share.onclick = () => {
-    const encoded = encodeURIComponent(btoa(sqlBox.value));
-    const url = location.origin + location.pathname + '?q=' + encoded;
-    navigator.clipboard.writeText(url).then(
-      () => alert('Link copied to clipboard!'),
-      () => prompt('Copy this link:', url)
-    );
-  };
-  runBtn.after(share);
+  // 2) Add "Share query link" button
+  const shareBtn = document.createElement('button');
+  shareBtn.id = 'share';
+  shareBtn.textContent = 'Share query link';
+  shareBtn.style.marginLeft = '8px';
+  shareBtn.addEventListener('click', () => {
+    const encoded = encodeURIComponent(btoa(sqlEl.value));
+    const url = `${location.origin}${location.pathname}?q=${encoded}`;
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url).then(
+        () => alert('Link copied to clipboard!'),
+        () => prompt('Copy this link:', url)
+      );
+    } else {
+      prompt('Copy this link:', url);
+    }
+  });
+  runBtn.insertAdjacentElement('afterend', shareBtn);
 })();
 </script>
+
