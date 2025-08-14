@@ -94,6 +94,37 @@ html[data-theme="dark"] .schema{
 </style>
 
 
+<style>
+/* Share button polish (theme-aware) */
+#share{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-left:8px;            /* keep the spacing you wanted */
+  padding:8px 12px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  background:#fff;
+  color:#0b1220;
+  cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .04s ease;
+}
+#share:hover{ background:#f8fafc; }
+#share:active{ transform:translateY(1px); }
+#share:focus{ outline:2px solid #2563eb; outline-offset:2px; }
+
+/* icon inherits text color in both themes */
+#share .ico{ width:1em; height:1em; display:inline-block; }
+
+/* Dark mode overrides */
+html[data-theme="dark"] #share{
+  background:#0f172a;
+  color:#e8eef7;
+  border-color:#1f2937;
+}
+html[data-theme="dark"] #share:hover{ background:#111827; }
+html[data-theme="dark"] #share:focus{ outline-color:#93c5fd; }
+</style>
 
 
 
@@ -278,24 +309,33 @@ html[data-theme="dark"] #run:focus {
     if (q) sqlEl.value = atob(decodeURIComponent(q));
   } catch (_) { /* ignore malformed payloads */ }
 
-  // 2) Add "Share query link" button
-  const shareBtn = document.createElement('button');
-  shareBtn.id = 'share';
-  shareBtn.textContent = 'Share query link';
-  shareBtn.style.marginLeft = '8px';
-  shareBtn.addEventListener('click', () => {
-    const encoded = encodeURIComponent(btoa(sqlEl.value));
-    const url = `${location.origin}${location.pathname}?q=${encoded}`;
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(url).then(
-        () => alert('Link copied to clipboard!'),
-        () => prompt('Copy this link:', url)
-      );
-    } else {
-      prompt('Copy this link:', url);
-    }
-  });
-  runBtn.insertAdjacentElement('afterend', shareBtn);
+// 2) Add "Share query link" button
+const shareBtn = document.createElement('button');
+shareBtn.id = 'share';
+shareBtn.type = 'button';
+shareBtn.setAttribute('aria-label', 'Share query link');
+shareBtn.innerHTML = `
+  <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- chain-link icon -->
+    <path d="M10.59 13.41a5 5 0 0 0 0-7.07l-1.17-1.17a5 5 0 1 0-7.07 7.07l1.17 1.17"/>
+    <path d="M13.41 10.59a5 5 0 0 0 0 7.07l1.17 1.17a5 5 0 1 0 7.07-7.07l-1.17-1.17"/>
+  </svg>
+  <span>Share query</span>
+`;
+shareBtn.addEventListener('click', () => {
+  const encoded = encodeURIComponent(btoa(sqlEl.value));
+  const url = `${location.origin}${location.pathname}?q=${encoded}`;
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(url).then(
+      () => alert('Link copied to clipboard!'),
+      () => prompt('Copy this link:', url)
+    );
+  } else {
+    prompt('Copy this link:', url);
+  }
+});
+runBtn.insertAdjacentElement('afterend', shareBtn);
 })();
 </script>
 
