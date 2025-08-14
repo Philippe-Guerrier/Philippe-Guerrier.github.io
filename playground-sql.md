@@ -34,53 +34,55 @@ permalink: /play/sql/
 </div>
 
 <style>
-/* Theme vars (scoped to the schema block only) */
-.schema {
-  --sch-text: #0b1220;
-  --sch-border: #e5e7eb;
-  --sch-head-bg: #f8fafc;
-  --sch-code-bg: #f3f4f6;
-  --sch-code-fg: #0b1220;
-  --sch-code-bd: #e5e7eb;
+/* ── Schema theme variables ───────────────────────────────────────────── */
+.schema{
+  --sch-text:        #0b1220;
+  --sch-border:      #e5e7eb;
+  --sch-head-bg:     #f8fafc;
+  --sch-row-alt:     #f9fafb;   /* NEW: lighter alt row */
+  --sch-code-bg:     #f9fafb;   /* NEW: very light pill */
+  --sch-code-fg:     #0b1220;
+  --sch-code-bd:     #e5e7eb;
 }
-html[data-theme="dark"] .schema {
-  --sch-text: #e8eef7;
-  --sch-border: #1f2937;
-  --sch-head-bg: #0f172a;
-  --sch-code-bg: #111827;
-  --sch-code-fg: #e8eef7;
-  --sch-code-bd: #1f2937;
+html[data-theme="dark"] .schema{
+  --sch-text:        #e8eef7;
+  --sch-border:      #1f2937;
+  --sch-head-bg:     #0f172a;
+  --sch-row-alt:     #0e1625;
+  --sch-code-bg:     #111827;   /* Dark pill */
+  --sch-code-fg:     #e8eef7;
+  --sch-code-bd:     #1f2937;
 }
 
-/* Table styling */
-.schema details > div table { border-collapse: collapse; width: 100%; }
+/* ── Table base ──────────────────────────────────────────────────────── */
+.schema details > div table{ border-collapse:collapse; width:100% }
 .schema details > div th,
-.schema details > div td {
-  border: 1px solid var(--sch-border);
-  padding: 6px 8px;
-  color: var(--sch-text);
+.schema details > div td{
+  border:1px solid var(--sch-border);
+  padding:6px 8px;
+  color:var(--sch-text);
 }
-.schema details > div thead th {
-  background: var(--sch-head-bg);
-  text-align: left;
+.schema details > div thead th{
+  background:var(--sch-head-bg);
+  text-align:left;
 }
-.schema details > div tbody tr:nth-child(even) {
-  background: color-mix(in srgb, var(--sch-head-bg) 60%, transparent);
-}
-
-/* Pill style for code tags (column names) */
-.schema code {
-  background: var(--sch-code-bg);
-  color: var(--sch-code-fg);
-  border: 1px solid var(--sch-code-bd);
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+.schema details > div tbody tr:nth-child(even){
+  background:var(--sch-row-alt);
 }
 
-/* Make the summary clickable and readable in both modes */
-.schema summary { cursor: pointer; color: var(--sch-text); }
+/* ── Inline code “pills” in the schema table only ─────────────────────── */
+.schema td code{
+  background:var(--sch-code-bg);
+  color:var(--sch-code-fg);
+  border:1px solid var(--sch-code-bd);
+  padding:2px 6px;
+  border-radius:6px;
+  font-weight:500;                      /* lighter than before */
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
+/* Summary text readable in both themes */
+.schema summary{ cursor:pointer; color:var(--sch-text); }
 </style>
 
 
