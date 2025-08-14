@@ -48,3 +48,5 @@ permalink: /projects/
 <p><a href="https://github.com/Philippe-Guerrier/music_rec_system">Repo</a></p>
 </div>
 </div>
+
+→ Try the [SQL Playground](/play/sql/)
