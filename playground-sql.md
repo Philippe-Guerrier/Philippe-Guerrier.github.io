@@ -6,7 +6,7 @@ permalink: /play/sql/
 # SQL Playground (runs in your browser)
 > **Please, click on "Load CSV as table ‘data’" to start!**
 
-<div markdown="0">
+<div class="schema" markdown="0">
 <details open>
   <summary><strong>Data schema (click to expand)</strong></summary>
   <div style="margin:10px 0">
@@ -34,11 +34,55 @@ permalink: /play/sql/
 </div>
 
 <style>
-details > div table { border-collapse: collapse; }
-details > div th, details > div td { border: 1px solid #e5e7eb; padding: 6px 8px; }
-html[data-theme="dark"] details > div th, 
-html[data-theme="dark"] details > div td { border-color:#1f2937; }
+/* Theme vars (scoped to the schema block only) */
+.schema {
+  --sch-text: #0b1220;
+  --sch-border: #e5e7eb;
+  --sch-head-bg: #f8fafc;
+  --sch-code-bg: #f3f4f6;
+  --sch-code-fg: #0b1220;
+  --sch-code-bd: #e5e7eb;
+}
+html[data-theme="dark"] .schema {
+  --sch-text: #e8eef7;
+  --sch-border: #1f2937;
+  --sch-head-bg: #0f172a;
+  --sch-code-bg: #111827;
+  --sch-code-fg: #e8eef7;
+  --sch-code-bd: #1f2937;
+}
+
+/* Table styling */
+.schema details > div table { border-collapse: collapse; width: 100%; }
+.schema details > div th,
+.schema details > div td {
+  border: 1px solid var(--sch-border);
+  padding: 6px 8px;
+  color: var(--sch-text);
+}
+.schema details > div thead th {
+  background: var(--sch-head-bg);
+  text-align: left;
+}
+.schema details > div tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--sch-head-bg) 60%, transparent);
+}
+
+/* Pill style for code tags (column names) */
+.schema code {
+  background: var(--sch-code-bg);
+  color: var(--sch-code-fg);
+  border: 1px solid var(--sch-code-bd);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Make the summary clickable and readable in both modes */
+.schema summary { cursor: pointer; color: var(--sch-text); }
 </style>
+
 
 
 
