@@ -4,38 +4,102 @@ permalink: /play/sql/
 ---
 
 # SQL Playground (runs in your browser)
+<details>
+  <summary><strong>Data schema (click to expand)</strong></summary>
+  <div style="margin:10px 0">
+    <table>
+      <thead><tr><th>col</th><th>meaning</th><th>example</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td>order id</td><td>2001</td></tr>
+        <tr><td><code>date</code></td><td>order date (YYYY-MM-DD)</td><td>2025-08-01</td></tr>
+        <tr><td><code>city</code></td><td>PAR / LYO / BER</td><td>PAR</td></tr>
+        <tr><td><code>seg</code></td><td>sushi / burg / pizza / healthy</td><td>sushi</td></tr>
+        <tr><td><code>chan</code></td><td>ios / and / web</td><td>ios</td></tr>
+        <tr><td><code>mem</code></td><td>Uber One member (0/1)</td><td>1</td></tr>
+        <tr><td><code>stat</code></td><td>deliv / cxl_usr / cxl_rest</td><td>deliv</td></tr>
+        <tr><td><code>km</code></td><td>distance (km)</td><td>3.1</td></tr>
+        <tr><td><code>prom</code></td><td>promised minutes</td><td>34</td></tr>
+        <tr><td><code>act</code></td><td>actual minutes (blank if canceled)</td><td>36</td></tr>
+        <tr><td><code>net</code></td><td>subtotal minus discounts (€)</td><td>21.50</td></tr>
+        <tr><td><code>fee</code></td><td>delivery fee (€)</td><td>2.90</td></tr>
+        <tr><td><code>tip</code></td><td>tip (€)</td><td>0.00</td></tr>
+        <tr><td><code>tot</code></td><td>net + fee + tip (0 if canceled)</td><td>24.40</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<style>
+details > div table { border-collapse: collapse; }
+details > div th, details > div td { border: 1px solid #e5e7eb; padding: 6px 8px; }
+html[data-theme="dark"] details > div th, 
+html[data-theme="dark"] details > div td { border-color:#1f2937; }
+</style>
+
 
 <textarea id="csv" rows="6" style="width:100%;max-width:760px">
-order_id,order_date,city,restaurant_segment,channel,uberone_member,new_customer,status,prep_min,travel_min,distance_km,courier_wait_min,subtotal_eur,promo_eur,delivery_fee_eur,tip_eur,refund_eur,total_eur,promised_min,actual_min,rating
-1001,2025-08-01,Berlin,Burgers,iOS,false,true,delivered,9,23,4.3,2,11.04,2.53,2.07,1,0.0,11.58,37,42,1
-1002,2025-08-01,Berlin,Healthy,iOS,false,false,delivered,20,26,5.0,2,21.91,4.79,3.0,0,0.0,20.12,51,51,5
-1003,2025-08-01,Lyon,Pizza,iOS,false,false,cancelled_by_restaurant,14,6,1.2,0,0.0,0.0,0.0,0.0,0.0,0.0,25,,
-1004,2025-08-01,Paris,Sushi,iOS,false,false,delivered,10,12,2.7,0,19.34,0.0,3.93,0,0.0,23.27,27,29,4
-1005,2025-08-02,Paris,Healthy,Android,true,false,delivered,11,24,4.4,2,11.12,1.34,0.0,1,0.0,10.78,40,48,3
-1006,2025-08-02,Berlin,Pizza,iOS,false,false,cancelled_by_user,15,6,1.5,1,0.0,0.0,0.0,0.0,0.0,0.0,26,,
-1007,2025-08-02,Berlin,Healthy,Android,true,false,delivered,9,25,4.7,2,33.82,0.0,0.0,4,0.0,37.82,39,39,2
-1008,2025-08-02,Berlin,Pizza,Web,false,true,delivered,9,16,3.8,1,10.27,0.0,2.5,3,0.0,15.77,30,28,5
-1009,2025-08-03,Paris,Burgers,Android,false,false,delivered,19,18,3.6,1,38.54,0.0,3.16,0,0.0,41.7,42,42,5
-1010,2025-08-03,Lyon,Sushi,Web,true,false,delivered,18,16,3.2,3,19.77,2.29,0.0,2,0.0,19.48,39,42,3
-1011,2025-08-03,Berlin,Burgers,Web,false,true,refunded_partial,12,17,2.4,3,37.07,0.0,3.56,0,4.75,35.88,34,33,4
-1012,2025-08-03,Paris,Healthy,iOS,false,false,delivered,13,23,4.8,2,43.68,0.0,3.91,4,0.0,51.59,41,46,5
-1013,2025-08-04,Lyon,Pizza,Android,true,true,delivered,16,17,3.1,2,20.26,0.0,0.0,1,0.0,21.26,38,33,4
-1014,2025-08-04,Paris,Pizza,iOS,false,false,delivered,12,24,4.6,1,38.04,0.0,4.16,0,0.0,42.2,41,43,5
-1015,2025-08-04,Berlin,Sushi,Web,true,false,delivered,17,20,3.6,2,19.79,0.0,0.0,5,0.0,24.79,42,36,5
-1016,2025-08-04,Paris,Burgers,Android,false,true,cancelled_by_restaurant,14,9,1.8,4,0.0,0.0,0.0,0.0,0.0,0.0,28,,
-1017,2025-08-05,Lyon,Healthy,iOS,false,false,delivered,8,22,3.9,1,22.61,0.0,4.76,0,0.0,27.37,35,30,4
-1018,2025-08-05,Paris,Sushi,Android,true,false,delivered,12,23,4.7,2,20.85,0.0,0.0,2,0.0,22.85,40,45,2
-1019,2025-08-05,Berlin,Pizza,Android,false,false,delivered,13,23,5.8,2,31.2,0.0,2.65,5,0.0,38.85,41,46,4
-1020,2025-08-05,Paris,Healthy,Web,false,true,refunded_partial,11,9,1.1,3,25.54,0.0,4.18,0,6.63,23.09,25,20,5
-1021,2025-08-06,Lyon,Burgers,iOS,true,false,delivered,16,22,4.7,3,31.45,0.0,0.0,2,0.0,33.45,43,48,2
-1022,2025-08-06,Paris,Sushi,Web,false,false,delivered,12,21,3.9,2,44.56,0.0,3.56,6,0.0,54.12,38,35,5
-1023,2025-08-06,Berlin,Healthy,Web,true,true,delivered,9,21,3.6,3,41.31,0.0,0.0,0,0.0,41.31,35,30,4
-1024,2025-08-07,Paris,Pizza,iOS,false,false,delivered,11,25,5.0,0,39.93,0.0,4.31,0,0.0,44.24,41,36,5
+id,date,city,seg,chan,mem,stat,km,prom,act,net,fee,tip,tot
+2001,2025-08-01,PAR,sushi,ios,0,deliv,3.1,34,36,21.50,2.90,0.00,24.40
+2002,2025-08-01,PAR,burg,and,1,deliv,2.8,38,35,16.40,0.00,2.00,18.40
+2003,2025-08-01,BER,pizza,ios,0,deliv,4.5,42,47,18.20,3.20,0.00,21.40
+2004,2025-08-01,LYO,healthy,web,0,deliv,3.9,37,33,24.10,2.50,1.00,27.60
+2005,2025-08-01,BER,sushi,and,1,cxl_usr,0.0,30,,0.00,0.00,0.00,0.00
+2006,2025-08-01,PAR,pizza,web,0,deliv,1.6,31,28,12.80,2.00,1.00,15.80
+2007,2025-08-01,LYO,burg,ios,0,deliv,2.2,35,34,19.90,2.50,0.00,22.40
+2008,2025-08-01,BER,healthy,web,1,deliv,5.2,41,40,28.30,0.00,3.00,31.30
+2009,2025-08-02,PAR,sushi,web,0,deliv,3.0,34,32,22.40,2.90,0.00,25.30
+2010,2025-08-02,BER,burg,and,0,deliv,4.1,40,44,17.60,3.20,1.00,21.80
+2011,2025-08-02,LYO,pizza,ios,1,deliv,2.7,33,31,15.10,0.00,2.00,17.10
+2012,2025-08-02,PAR,healthy,web,0,deliv,5.0,42,38,26.90,2.50,0.00,29.40
+2013,2025-08-02,BER,sushi,ios,0,cxl_rest,0.0,29,,0.00,0.00,0.00,0.00
+2014,2025-08-02,LYO,burg,and,0,deliv,3.2,36,39,18.70,2.50,0.00,21.20
+2015,2025-08-02,PAR,pizza,web,1,deliv,1.9,31,33,13.50,0.00,1.00,14.50
+2016,2025-08-02,BER,healthy,ios,0,deliv,4.8,40,41,27.80,3.00,2.00,32.80
+2017,2025-08-03,PAR,sushi,ios,0,deliv,2.6,33,34,20.90,2.50,0.00,23.40
+2018,2025-08-03,LYO,healthy,web,1,deliv,4.5,39,36,31.20,0.00,3.00,34.20
+2019,2025-08-03,BER,pizza,and,0,deliv,5.5,43,47,19.40,3.20,0.00,22.60
+2020,2025-08-03,PAR,burg,web,0,deliv,3.1,36,35,22.10,2.50,1.00,25.60
+2021,2025-08-03,BER,sushi,ios,1,deliv,2.3,31,30,16.80,0.00,2.00,18.80
+2022,2025-08-03,LYO,pizza,ios,0,cxl_usr,0.0,32,,0.00,0.00,0.00,0.00
+2023,2025-08-03,PAR,healthy,and,0,deliv,4.2,40,43,29.50,3.00,0.00,32.50
+2024,2025-08-03,BER,burg,web,0,deliv,3.8,37,39,18.30,3.00,1.00,22.30
+2025,2025-08-04,PAR,pizza,ios,0,deliv,1.5,30,29,14.20,2.00,0.00,16.20
+2026,2025-08-04,LYO,sushi,web,0,deliv,3.3,35,37,21.50,2.50,0.00,24.00
+2027,2025-08-04,BER,healthy,and,1,deliv,5.0,41,40,33.40,0.00,4.00,37.40
+2028,2025-08-04,PAR,burg,ios,0,deliv,2.0,34,36,19.10,2.50,1.00,22.60
+2029,2025-08-04,LYO,pizza,web,0,deliv,2.4,32,34,15.80,2.00,0.00,17.80
+2030,2025-08-04,BER,sushi,and,0,cxl_rest,0.0,30,,0.00,0.00,0.00,0.00
+2031,2025-08-04,PAR,healthy,web,1,deliv,4.7,42,39,28.70,0.00,2.00,30.70
+2032,2025-08-04,BER,burg,ios,0,deliv,3.9,38,37,17.90,3.00,0.00,20.90
+2033,2025-08-05,PAR,sushi,and,0,deliv,3.0,33,35,22.60,3.00,0.00,25.60
+2034,2025-08-05,LYO,burg,ios,1,deliv,2.2,35,31,19.50,0.00,2.00,21.50
+2035,2025-08-05,BER,pizza,web,0,deliv,4.9,42,45,18.90,3.20,0.00,22.10
+2036,2025-08-05,PAR,healthy,ios,0,deliv,4.5,40,41,27.20,2.80,2.00,32.00
+2037,2025-08-05,BER,sushi,web,0,deliv,2.8,31,29,20.10,3.00,1.00,24.10
+2038,2025-08-05,LYO,pizza,and,0,cxl_usr,0.0,32,,0.00,0.00,0.00,0.00
+2039,2025-08-05,PAR,burg,web,0,deliv,3.6,36,38,21.30,2.50,0.00,23.80
+2040,2025-08-05,BER,healthy,ios,1,deliv,5.3,41,40,32.40,0.00,3.00,35.40
+2041,2025-08-06,PAR,pizza,web,0,deliv,2.0,31,33,13.80,2.00,0.00,15.80
+2042,2025-08-06,LYO,sushi,ios,0,deliv,3.1,34,34,21.10,2.50,1.00,24.60
+2043,2025-08-06,BER,burg,and,0,deliv,4.0,39,41,18.20,3.00,0.00,21.20
+2044,2025-08-06,PAR,healthy,web,1,deliv,4.6,42,44,30.80,0.00,4.00,34.80
+2045,2025-08-06,BER,pizza,ios,0,deliv,5.1,43,46,19.70,3.20,0.00,22.90
+2046,2025-08-06,LYO,sushi,web,0,cxl_rest,0.0,30,,0.00,0.00,0.00,0.00
+2047,2025-08-06,PAR,burg,and,0,deliv,3.3,36,35,20.50,2.50,1.00,24.00
+2048,2025-08-06,BER,healthy,web,1,deliv,5.0,41,39,31.60,0.00,3.00,34.60
+
 
 </textarea>
 <button id="load">Load CSV as table 'data'</button>
 
-<textarea id="sql" rows="6" style="width:100%;max-width:760px;margin-top:10px">SELECT * FROM data ORDER BY score DESC;</textarea>
+<textarea id="sql" rows="6" style="width:100%;max-width:760px;margin-top:10px">SELECT mem,
+  ROUND(AVG(fee),2) AS avg_fee,
+  ROUND(AVG(tip),2) AS avg_tip,
+  COUNT(*) AS orders
+FROM data
+WHERE stat = 'deliv'
+GROUP BY mem;</textarea>
+
 <button id="run">Run SQL</button>
 
 <pre id="out" style="padding:10px;border:1px solid #e5e7eb;border-radius:10px;overflow:auto;white-space:pre-wrap"></pre>
@@ -58,7 +122,7 @@ order_id,order_date,city,restaurant_segment,channel,uberone_member,new_customer,
 }
 #load:hover, #run:hover { background: #f8fafc; }
 
-/* ✅ Dark mode overrides — ONLY when html[data-theme="dark"] is set */
+/* Dark mode overrides — ONLY when html[data-theme="dark"] is set */
 html[data-theme="dark"] #csv,
 html[data-theme="dark"] #sql {
   background: #0f172a;
@@ -131,6 +195,7 @@ html[data-theme="dark"] #run:focus {
   document.getElementById('load').onclick = () => {
     csvToTable(document.getElementById('csv').value);
     out.textContent = 'Loaded table data';
+    document.getElementById('run').click(); 
   };
   document.getElementById('run').onclick = () => run(document.getElementById('sql').value);
 })();
