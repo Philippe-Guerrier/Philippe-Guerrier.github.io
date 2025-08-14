@@ -4,7 +4,9 @@ permalink: /play/sql/
 ---
 
 # SQL Playground (runs in your browser)
-<details>
+
+<div markdown="0">
+<details open>
   <summary><strong>Data schema (click to expand)</strong></summary>
   <div style="margin:10px 0">
     <table>
@@ -28,6 +30,7 @@ permalink: /play/sql/
     </table>
   </div>
 </details>
+</div>
 
 <style>
 details > div table { border-collapse: collapse; }
@@ -35,6 +38,7 @@ details > div th, details > div td { border: 1px solid #e5e7eb; padding: 6px 8px
 html[data-theme="dark"] details > div th, 
 html[data-theme="dark"] details > div td { border-color:#1f2937; }
 </style>
+
 
 
 <textarea id="csv" rows="6" style="width:100%;max-width:760px">
