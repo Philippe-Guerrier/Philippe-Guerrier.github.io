@@ -9,7 +9,7 @@ permalink: /
 
 [About](/about/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
-> Dark/Light Mode available in the bottom right corner !
+> **Dark/Light Mode** available in the bottom right corner !
 
 ## Highlights
 - **PulseFlow AI** - Offline music identifier & recommender (CLAP embeddings + FAISS) with smooth transitions. Runs fully on‑device.  
