@@ -7,6 +7,35 @@
     {% seo %}
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | default: 1 | relative_url }}">
   </head>
+  <script>
+(function(){
+  // Inject minimal dark/light styles
+  const css = `
+:root{--bg:#fff;--text:#0b1220;--card:#f8fafc;--border:#e5e7eb}
+html[data-theme="dark"]{--bg:#0b1220;--text:#e8eef7;--card:#0f172a;--border:#1f2937}
+body{background:var(--bg)!important;color:var(--text)!important}
+.page-header,.site-footer{background:var(--card)!important;border-color:var(--border)!important}
+.theme-toggle{position:fixed;right:16px;bottom:16px;z-index:9999;padding:8px 12px;border-radius:10px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text)}
+`;
+  const style=document.createElement('style'); style.textContent=css; document.head.appendChild(style);
+
+  function setTheme(t){ document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); }
+  const saved=localStorage.getItem('theme');
+  const prefersDark=matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(saved || (prefersDark ? 'dark':'light'));
+
+  const btn=document.createElement('button');
+  btn.className='theme-toggle';
+  function sync(){ btn.textContent = (document.documentElement.getAttribute('data-theme')==='dark') ? '☀︎ Light' : '☾ Dark'; }
+  sync();
+  btn.onclick=function(){
+    const next = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    setTheme(next); sync();
+  };
+  document.addEventListener('DOMContentLoaded', ()=>document.body.appendChild(btn));
+})();
+</script>
+
   <body>
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ site.title }}</h1>
