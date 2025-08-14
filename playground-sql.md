@@ -34,27 +34,34 @@ permalink: /play/sql/
 </div>
 
 <style>
-/* ── Schema theme variables ───────────────────────────────────────────── */
+/* Scope all styles to the schema block */
 .schema{
-  --sch-text:        #0b1220;
-  --sch-border:      #e5e7eb;
-  --sch-head-bg:     #f8fafc;
-  --sch-row-alt:     #f9fafb;   /* NEW: lighter alt row */
-  --sch-code-bg:     #f9fafb;   /* NEW: very light pill */
-  --sch-code-fg:     #0b1220;
-  --sch-code-bd:     #e5e7eb;
-}
-html[data-theme="dark"] .schema{
-  --sch-text:        #e8eef7;
-  --sch-border:      #1f2937;
-  --sch-head-bg:     #0f172a;
-  --sch-row-alt:     #0e1625;
-  --sch-code-bg:     #111827;   /* Dark pill */
-  --sch-code-fg:     #e8eef7;
-  --sch-code-bd:     #1f2937;
+  /* Base (light mode) */
+  --sch-text:      #0b1220;
+  --sch-border:    #e5e7eb;
+  --sch-head-bg:   #f8fafc;
+  --sch-row-alt:   #fbfdff;
+
+  /* Pills (LIGHT): gray bg + white text */
+  --sch-code-bg:   #4b5563;  /* gray-600 */
+  --sch-code-fg:   #ffffff;  /* white text */
+  --sch-code-bd:   #374151;  /* gray-700 */
 }
 
-/* ── Table base ──────────────────────────────────────────────────────── */
+/* Dark mode variables */
+html[data-theme="dark"] .schema{
+  --sch-text:      #e8eef7;
+  --sch-border:    #1f2937;
+  --sch-head-bg:   #0f172a;
+  --sch-row-alt:   #0e1625;
+
+  /* Pills (DARK): slate bg + white text */
+  --sch-code-bg:   #111827;  /* gray-900 */
+  --sch-code-fg:   #ffffff;  /* white text */
+  --sch-code-bd:   #374151;  /* gray-700 */
+}
+
+/* Table styling */
 .schema details > div table{ border-collapse:collapse; width:100% }
 .schema details > div th,
 .schema details > div td{
@@ -70,20 +77,22 @@ html[data-theme="dark"] .schema{
   background:var(--sch-row-alt);
 }
 
-/* ── Inline code “pills” in the schema table only ─────────────────────── */
-.schema td code{
-  background:var(--sch-code-bg);
-  color:var(--sch-code-fg);
+/* High-contrast inline code “pills” (only inside the schema table) */
+.schema details > div td code{
+  background:var(--sch-code-bg) !important;
+  color:var(--sch-code-fg) !important;
   border:1px solid var(--sch-code-bd);
-  padding:2px 6px;
-  border-radius:6px;
-  font-weight:500;                      /* lighter than before */
+  padding:3px 8px;
+  border-radius:8px;
+  font-weight:600;
+  letter-spacing:.2px;
   font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
 }
 
-/* Summary text readable in both themes */
+/* Summary text */
 .schema summary{ cursor:pointer; color:var(--sch-text); }
 </style>
+
 
 
 
