@@ -9,6 +9,8 @@ permalink: /projects/
 
 [Home](/) · [About](/about/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
+# Small Note if you like this portfolio (Easter Eggs are presents)
+→ Try the [SQL Playground](/play/sql/)
 <!--- <div class="navbar">[Home](/) · [About](/about/) · [Contact](/contact/)</div> --->
 
 <div class="card-grid">
@@ -48,5 +50,7 @@ permalink: /projects/
 <p><a href="https://github.com/Philippe-Guerrier/music_rec_system">Repo</a></p>
 </div>
 </div>
+
+# Quick Note
 
 → Try the [SQL Playground](/play/sql/)
