@@ -33,3 +33,11 @@ defaults:
 feed:
   path: feed.xml
 
+# ensure the site‑wide default image points at your OG image
+defaults:
+  - scope: { path: "" }
+    values:
+      image: /assets/og-default.png # or .svg
+
+
+
