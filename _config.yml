@@ -12,7 +12,8 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-feed
-  - jekyll-redirect-from
+ # - jekyll-redirect-from
+ 
 # Social/SEO extras for jekyll-seo-tag
 social:
   links:
