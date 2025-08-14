@@ -4,6 +4,7 @@ permalink: /play/sql/
 ---
 
 # SQL Playground (runs in your browser)
+> **Please, click on "Load CSV as table ‘data’" to start!**
 
 <div markdown="0">
 <details open>
