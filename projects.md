@@ -9,7 +9,7 @@ permalink: /projects/
 
 [Home](/) · [About](/about/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
-# Small Note if you like this portfolio (Easter Eggs are presents)
+> Small Note if you like this portfolio (Easter Eggs are presents)
 → Try the [SQL Playground](/play/sql/)
 <!--- <div class="navbar">[Home](/) · [About](/about/) · [Contact](/contact/)</div> --->
 
