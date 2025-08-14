@@ -4,6 +4,8 @@ title: Experience
 permalink: /experience/
 ---
 # Experience
+[Home](/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
+
 
 ## Deezer - Data Analyst (Intern) · Apr 2025–Sep 2025  · Paris (Hybrid)
 SQL • Python • Airflow • Dashboards • Product/Ops analytics.
