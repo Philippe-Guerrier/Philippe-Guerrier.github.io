@@ -3,6 +3,11 @@ layout: default
 title: Now
 permalink: /now/
 ---
+
+[Home](/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
+
+
+
 _Last updated: 2025‑08‑14_
 
 - Building analytics and product insights at **Deezer**.
