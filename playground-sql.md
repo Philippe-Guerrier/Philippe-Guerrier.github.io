@@ -292,6 +292,3 @@ html[data-theme="dark"] #run:focus {
   runBtn.after(share);
 })();
 </script>
-
-})();
-</script>
