@@ -224,6 +224,8 @@ html[data-theme="dark"] #run:focus {
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+
+
 <script>
 (async function(){
   const SQL = await initSqlJs({ locateFile: f => 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/' + f });
@@ -259,5 +261,37 @@ html[data-theme="dark"] #run:focus {
     document.getElementById('run').click(); 
   };
   document.getElementById('run').onclick = () => run(document.getElementById('sql').value);
+  <script>
+/* --- Shareable SQL ---------------------------------------------------- */
+(function(){
+  const sqlBox = document.getElementById('sql');
+  const runBtn = document.getElementById('run');
+
+  // 1) Load SQL from URL (?q=base64)
+  try {
+    const q = new URLSearchParams(location.search).get('q');
+    if (q) {
+      sqlBox.value = atob(decodeURIComponent(q));
+      // If table already loaded, auto-run
+      // (your existing Load button already calls run after loading)
+    }
+  } catch (e) { /* ignore bad payloads */ }
+
+  // 2) Share button
+  const share = document.createElement('button');
+  share.textContent = 'Share query link';
+  share.style.marginLeft = '8px';
+  share.onclick = () => {
+    const encoded = encodeURIComponent(btoa(sqlBox.value));
+    const url = location.origin + location.pathname + '?q=' + encoded;
+    navigator.clipboard.writeText(url).then(
+      () => alert('Link copied to clipboard!'),
+      () => prompt('Copy this link:', url)
+    );
+  };
+  runBtn.after(share);
+})();
+</script>
+
 })();
 </script>
