@@ -12,3 +12,7 @@ permalink: /uses/
 **Infra**: Git/GitHub, Docker (basics), Ollama/HF for local LLMs.
 
 **Web/General**: HTML/CSS/JS, Markdown, VS Code.
+
+
+### Quick help
+[Home](/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
