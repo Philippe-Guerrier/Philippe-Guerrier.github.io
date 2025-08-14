@@ -7,9 +7,9 @@ permalink: /
 
 **Data** - offline AI for music, ML engineering, and applied AI in medicine. Currently **Data Analyst @ Deezer** (Apr 2025–Sep 2025). Past roles at **Uber** (Ops Analytics) and **Amazon** (BI/DG). Multilingual (FR/EN/DE).
 
-Dark/Light Mode available in the bottom right corner !
-
 [About](/about/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
+
+> Dark/Light Mode available in the bottom right corner !
 
 ## Highlights
 - **PulseFlow AI** - Offline music identifier & recommender (CLAP embeddings + FAISS) with smooth transitions. Runs fully on‑device.  
