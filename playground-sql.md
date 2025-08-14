@@ -97,7 +97,8 @@ id,date,city,seg,chan,mem,stat,km,prom,act,net,fee,tip,tot
 </textarea>
 <button id="load">Load CSV as table 'data'</button>
 
-<textarea id="sql" rows="6" style="width:100%;max-width:760px;margin-top:10px">SELECT mem,
+<textarea id="sql" rows="6" style="width:100%;max-width:760px;margin-top:10px">--Member vs non-member: fee & tip (delivered)
+SELECT mem,
   ROUND(AVG(fee),2) AS avg_fee,
   ROUND(AVG(tip),2) AS avg_tip,
   COUNT(*) AS orders
