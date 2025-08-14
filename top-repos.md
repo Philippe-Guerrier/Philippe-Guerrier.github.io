@@ -4,7 +4,10 @@ title: Top Repos
 permalink: /top-repos/
 ---
 # Top GitHub Repositories
+[Home](/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
+
+## Let's see !
 <small>Auto‑generated from your public repos (excludes forks/archived). Sorted by stars, then recent updates. No maintenance needed.</small>
 
 <input id="filter" type="search" placeholder="Filter by name or language…" style="margin:12px 0;padding:8px 10px;width:100%;max-width:420px;border:1px solid #e5e7eb;border-radius:10px" />
