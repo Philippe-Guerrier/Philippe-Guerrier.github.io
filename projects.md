@@ -10,6 +10,7 @@ permalink: /projects/
 
 → Try the [SQL Playground](/play/sql/) </p>
 
+<p></p>
 > A few representative repos. Full list on my [GitHub](https://github.com/Philippe-Guerrier) and [portfolio](https://sites.google.com/view/philippeguerrier/home).
 
 [Home](/) · [About](/about/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
