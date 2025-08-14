@@ -1,0 +1,23 @@
+---
+layout: null
+permalink: /search.json
+---
+
+[
+{%- assign docs = site.pages | where_exp: "p", "p.search_exclude != true" -%}
+{%- for coll in site.collections -%}
+  {%- assign docs = docs | concat: coll.docs -%}
+{%- endfor -%}
+{%- assign docs = docs | concat: site.posts -%}
+{%- for p in docs -%}
+  {%- assign title = p.title | default: p.name -%}
+  {%- assign url = p.url | relative_url -%}
+  {%- assign desc = p.description | default: p.excerpt -%}
+  {
+    "title": {{ title | jsonify }},
+    "url": {{ url | jsonify }},
+    "content": {{ p.content | strip_html | normalize_whitespace | jsonify }},
+    "description": {{ desc | strip_html | normalize_whitespace | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
