@@ -5,7 +5,7 @@ lang: en
 email: "philippeguerrier01@gmail.com"
 author: "Philippe Guerrier"
 
-# Theme via remote_theme so you can customize includes/layouts
+# Theme via remote_theme to customize includes/layouts
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
   - jekyll-remote-theme
