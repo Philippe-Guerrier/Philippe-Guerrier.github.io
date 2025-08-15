@@ -22,3 +22,32 @@
 /* Make code blocks a bit nicer (optional) */
 pre, code { background:#f8fafc; border-radius:8px; padding:.2em .4em }
 
+/* Center the top navbar, wrap nicely on small screens */
+.navbar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;          /* space between links */
+  flex-wrap: wrap;    /* wrap if too many links */
+  padding: 8px 0;
+}
+
+/* Optional: subtle pill styling (theme-aware if you already set CSS vars) */
+.navbar a{
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border, #e5e7eb);
+  background: var(--card, #fff);
+  color: var(--text, #0b1220);
+}
+html[data-theme="dark"] .navbar a{
+  background: var(--card, #0f172a);
+  color: var(--text, #e8eef7);
+  border-color: var(--border, #1f2937);
+}
+
+/* Highlight current page */
+.navbar a[aria-current="page"]{
+  border-color: var(--accent, #2563eb);
+}
