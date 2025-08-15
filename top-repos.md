@@ -8,7 +8,7 @@ permalink: /top-repos/
 
 
 ## Let's see !
-<small>Auto‑generated from your public repos (excludes forks/archived). Sorted by stars, then recent updates. No maintenance needed.</small>
+<small>Auto‑generated from my public repos (excludes forks/archived). Sorted by stars, then recent updates.</small>
 
 <input id="filter" type="search" placeholder="Filter by name or language…" style="margin:12px 0;padding:8px 10px;width:100%;max-width:420px;border:1px solid #e5e7eb;border-radius:10px" />
 
