@@ -39,5 +39,19 @@ defaults:
     values:
       image: /assets/og-default.png # or .svg
 
+author:
+  name: "Philippe Guerrier"
+  job_title: "Data Analyst / Data Scientist"
+  email: "philippeguerrier01@gmail.com"
+  image: "/assets/img/philippe.jpg" 
+  works_for: "Deezer"
+  same_as:
+    - "https://github.com/Philippe-Guerrier"
+    - "https://www.linkedin.com/in/philippe-guerrier1/"
+    - "https://sites.google.com/view/philippeguerrier/home"
+  alumni_of:
+    - "Université Paris Dauphine - PSL"
+    - "University Paris 1 Panthéon-Sorbonne"
+  knows_language: ["fr-FR","en-US","de-DE"]
 
 
