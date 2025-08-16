@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://philippe-guerrier.github.io/sitemap.xml
