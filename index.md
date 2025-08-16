@@ -115,21 +115,28 @@ html[data-theme="dark"] .egg-pill kbd{ background:rgba(0,0,0,.08); }
 </style>
 
 
-<!-- Person JSON-LD (homepage only) -->
+<!-- Profile Page + Person (homepage only) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "{{ site.author.name | escape }}",
-  "jobTitle": "{{ site.author.job_title | escape }}",
-  "url": "{{ '/' | absolute_url }}"{% if site.author.image %},
-  "image": "{{ site.author.image | absolute_url }}"{% endif %},
-  "email": "mailto:{{ site.author.email | escape }}",
-  "sameAs": {{ site.author.same_as | jsonify }},
-  "alumniOf": [{% for a in site.author.alumni_of %}{ "@type":"CollegeOrUniversity","name":"{{ a | escape }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],
-  "knowsLanguage": {{ site.author.knows_language | jsonify }}{% if site.author.works_for %},
-  "worksFor": { "@type":"Organization", "name":"{{ site.author.works_for | escape }}" }{% endif %}
+  "@type": "ProfilePage",
+  "url": "{{ '/' | absolute_url }}",
+  "name": "{{ site.title | escape }}",
+  "dateModified": "{{ site.time | date_to_xmlschema }}",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "{{ site.author.name | default: site.title | escape }}",
+    "jobTitle": "{{ site.author.job_title | escape }}",
+    "url": "{{ '/' | absolute_url }}",
+    {% if site.author.image %}"image": "{{ site.author.image | absolute_url }}",{% endif %}
+    {% if site.author.email %}"email": "mailto:{{ site.author.email | escape }}",{% endif %}
+    "sameAs": {{ site.author.same_as | jsonify }},
+    "alumniOf": [{% for a in site.author.alumni_of %}{ "@type":"CollegeOrUniversity","name":"{{ a | escape }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],
+    "knowsLanguage": {{ site.author.knows_language | jsonify }}{% if site.author.works_for %},
+    "worksFor": { "@type":"Organization", "name":"{{ site.author.works_for | escape }}" }{% endif %}
+  }
 }
 </script>
+
 
 
