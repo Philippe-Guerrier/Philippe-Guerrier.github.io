@@ -4,19 +4,34 @@ permalink: /search.json
 ---
 
 [
-  {% comment %}
-  Build a flat list of pages + posts (skip those that set `search_exclude:true`)
-  {% endcomment %}
-  {% assign pages = site.pages | where_exp: "p", "p.search_exclude != true" %}
+{% comment %}
+Build an index of pages + posts. Any doc can opt-out via `search_exclude: true`.
+We include title, description (front matter or excerpt), content and url.
+{% endcomment %}
+{% assign items = "" | split: "" %}
+{% assign pages = site.pages | where_exp: "p", "p.search_exclude != true" %}
+{% assign items = items | concat: pages %}
+
+{% if site.posts %}
   {% assign posts = site.posts | where_exp: "p", "p.search_exclude != true" %}
-  {% assign all = pages | concat: posts %}
-  {% for doc in all %}
-  {
-    "title": {{ doc.title | default: doc.name | jsonify }},
-    "url": {{ doc.url | relative_url | jsonify }},
-    "date": {{ doc.date | date_to_string | jsonify }},
-    "type": {{ doc.collection | default: "page" | jsonify }},
-    "content": {{ doc.content | strip_html | normalize_whitespace | jsonify }}
-  }{% unless forloop.last %},{% endunless %}
-  {% endfor %}
+  {% assign items = items | concat: posts %}
+{% endif %}
+
+{% for coll in site.collections %}
+  {% unless coll.label == "posts" or coll.label == "assets" or coll.label == "files" or coll.label == "uploads" %}
+    {% assign docs = coll.docs | where_exp: "d", "d.search_exclude != true" %}
+    {% assign items = items | concat: docs %}
+  {% endunless %}
+{% endfor %}
+
+{% for doc in items %}
+{% if doc.title and doc.url %}
+{
+  "title": {{ doc.title | jsonify }},
+  "description": {{ doc.description | default: doc.excerpt | default: "" | strip_html | normalize_whitespace | jsonify }},
+  "content": {{ doc.content | strip_html | normalize_whitespace | jsonify }},
+  "url": "{{ doc.url | absolute_url }}"
+}{% unless forloop.last %},{% endunless %}
+{% endif %}
+{% endfor %}
 ]
