@@ -113,3 +113,23 @@ html[data-theme="dark"] .egg-pill kbd{ background:rgba(0,0,0,.08); }
 /* subtle accent for SQL card */
 .sql-card{border-left:3px solid var(--accent)}
 </style>
+
+
+<!-- Person JSON-LD (homepage only) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.author.name | escape }}",
+  "jobTitle": "{{ site.author.job_title | escape }}",
+  "url": "{{ '/' | absolute_url }}"{% if site.author.image %},
+  "image": "{{ site.author.image | absolute_url }}"{% endif %},
+  "email": "mailto:{{ site.author.email | escape }}",
+  "sameAs": {{ site.author.same_as | jsonify }},
+  "alumniOf": [{% for a in site.author.alumni_of %}{ "@type":"CollegeOrUniversity","name":"{{ a | escape }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],
+  "knowsLanguage": {{ site.author.knows_language | jsonify }}{% if site.author.works_for %},
+  "worksFor": { "@type":"Organization", "name":"{{ site.author.works_for | escape }}" }{% endif %}
+}
+</script>
+
+
