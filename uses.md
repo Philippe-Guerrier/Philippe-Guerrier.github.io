@@ -112,14 +112,14 @@ const SPOTLIGHT = [
 </script>
 <!-- ===== /Spotlight 2.0 ===== -->
 
-<!-- ===== Stack Heatmap (vertical headers + business skills) ===== -->
+<!-- ===== Stack Heatmap (taller header so labels have room) ===== -->
 <section class="hm">
   <h2>Stack Heatmap</h2>
-  <p class="hm-sub">How my tooling shows up across two “modes” of work.</p>
+  <p>How my tooling shows up across two “modes” of work.</p>
 
   <div class="hm-tabs">
-    <button data-mode="data" class="on" id="hmTabData" aria-pressed="true">Data Jobs</button>
-    <button data-mode="biz" id="hmTabBiz" aria-pressed="false">Business Jobs</button>
+    <button data-mode="data" class="on" id="hmTabData">Data Jobs</button>
+    <button data-mode="biz" id="hmTabBiz">Business Jobs</button>
   </div>
 
   <div class="hm-grid" id="hmGrid" aria-live="polite">
@@ -128,62 +128,92 @@ const SPOTLIGHT = [
   </div>
 
   <div class="hm-legend">
-    <span>Low</span>
-    <span class="bar"><i></i></span>
-    <span>High</span>
+    <span>Low</span><span class="bar"><i></i></span><span>High</span>
   </div>
   <p class="hm-tip">Hover a cell for a quick note; click a column header to highlight.</p>
 </section>
 
 <style>
-/* ---- layout / theme vars ---- */
-.hm { --cell: 36px; --gap: 8px; --ycol: 260px; --bd:#e5e7eb; --tx:#0b1220; --muted:#6b7280; --accent:#2563eb; }
-html[data-theme="dark"] .hm { --bd:#1f2937; --tx:#e8eef7; --muted:#9aa4b5; --accent:#60a5fa; }
+/* ---- theme / layout vars ---- */
+.hm{
+  --cell:38px;              /* cell size */
+  --gap:8px;                /* grid gap */
+  --ycol:280px;             /* left text column width */
+  --headH:120px;            /* header row HEIGHT (increase if you want more space) */
+  --bd:#e5e7eb; --tx:#0b1220; --muted:#6b7280; --accent:#2563eb;
+}
+html[data-theme="dark"] .hm{ --bd:#1f2937; --tx:#e8eef7; --muted:#9aa4b5; --accent:#60a5fa; }
 
-.hm h2 { margin-bottom:.25rem }
-.hm-sub { margin:.25rem 0 1rem; color:var(--muted) }
+.hm h2{ margin-bottom:.25rem }
+.hm p{ margin:.25rem 0 1rem; color:var(--muted) }
 
-.hm-tabs { display:flex; gap:8px; margin-bottom:10px }
+.hm-tabs{ display:flex; gap:8px; margin-bottom:10px }
 .hm-tabs button{
   padding:6px 10px; border:1px solid var(--bd); border-radius:999px;
   background:#fff; cursor:pointer; color:var(--tx)
 }
-.hm-tabs .on{ border-color:var(--accent) }
 html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
+.hm-tabs .on{ border-color:var(--accent) }
 
-.hm-grid{ 
-  overflow:auto; border:1px solid var(--bd); border-radius:12px; padding:10px; 
+/* ---- grid ---- */
+.hm-grid{
+  overflow:auto;
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:16px 12px 12px;     /* a bit more top padding */
   background:transparent;
 }
-.hm-grid .row{ display:grid; gap:var(--gap); grid-template-columns: var(--ycol) repeat(var(--cols), var(--cell)); align-items:center; }
-.hm-grid .row + .row{ margin-top:var(--gap) }
+.hm-grid .row{
+  display:grid;
+  gap:var(--gap);
+  grid-template-columns: var(--ycol) repeat(var(--cols), var(--cell));
+  align-items:center;
+}
+
+/* header row is taller so vertical labels fit comfortably */
+.hm-grid .row.head{
+  min-height:var(--headH);
+  align-items:flex-end;       /* anchor labels toward the cells */
+}
 
 .hm-grid .cell{
-  width:var(--cell); height:var(--cell); border-radius:10px; 
+  width:var(--cell); height:var(--cell);
+  border-radius:10px;
   display:flex; align-items:center; justify-content:center;
   border:1px solid var(--bd); background:transparent; color:var(--tx);
   user-select:none;
 }
 .hm-grid .y{
-  width:auto; justify-content:flex-start; padding:0 6px; border:none; background:transparent; font-weight:700;
+  width:auto; justify-content:flex-start; padding:0 6px;
+  border:none; background:transparent; font-weight:600;
 }
 
-/* always-vertical headers, smaller font */
+/* vertical column headers — slightly smaller & centered */
 .hm-grid .x{
-  font-weight:700; border:none; background:transparent; width:var(--cell);
-  display:flex; align-items:center; justify-content:center; text-align:center;
-  writing-mode:vertical-rl; transform:rotate(180deg);
-  line-height:1; font-size:.82rem; letter-spacing:.2px; padding:6px 2px;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);   /* keep upright */
+  display:flex; align-items:center; justify-content:center;
+  height:100%;
+  font-size:.80rem;
+  letter-spacing:.15px;
+  padding:0;
+  border:none; background:transparent;
 }
 
+/* column highlight */
 .hm-grid[data-focus] .rows .cell[data-col],
-.hm-grid[data-focus] .head .cell[data-col]{ opacity:.35; }
+.hm-grid[data-focus] .head .cell[data-col]{ opacity:.35 }
 .hm-grid[data-focus] .rows .cell[data-col="F"],
-.hm-grid[data-focus] .head .cell[data-col="F"]{ opacity:1; }
+.hm-grid[data-focus] .head .cell[data-col="F"]{ opacity:1 }
 
+/* legend */
 .hm-legend{ display:flex; align-items:center; gap:10px; margin:.75rem 0 }
-.hm-legend .bar{ width:140px; height:8px; border-radius:999px; background:linear-gradient(90deg, rgba(37,99,235,.12), rgba(37,99,235,.9)); border:1px solid var(--bd) }
-.hm-tip{ color:var(--muted); margin-top:4px }
+.hm-legend .bar{ width:160px; height:8px; border-radius:999px; background:linear-gradient(90deg, rgba(37,99,235,.12), rgba(37,99,235,.9)); border:1px solid var(--bd) }
+.hm-legend .bar i{ display:block; height:100%; border-radius:inherit }
+
+@media (max-width: 800px){
+  .hm{ --cell:34px; --ycol:230px; --headH:100px; }
+}
 </style>
 
 <script>
@@ -194,22 +224,10 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
   const tabData = document.getElementById('hmTabData');
   const tabBiz  = document.getElementById('hmTabBiz');
 
-  // tools + business skills (columns)
   const HM_TOOLS = [
-    { full:'Python' },
-    { full:'SQL' },
-    { full:'Airflow' },
-    { full:'Spark' },
-    { full:'ML (TF/PT)' },
-    { full:'FAISS' },
-    { full:'Tableau/BI' },
-    { full:'dbt' },
-    { full:'Qiskit' },
-    { full:'Ollama' },
-    { full:'Business Acumen' },
-    { full:'Storytelling' },
-    { full:'Stakeholders' },
-    { full:'Fuunel' }
+    { full:'Python' }, { full:'SQL' }, { full:'Airflow' }, { full:'Spark' },
+    { full:'ML (TF/PT)' }, { full:'FAISS' }, { full:'Tableau/BI' }, { full:'dbt' },
+    { full:'Qiskit' }, { full:'Ollama' }, { full:'Business Acumen' }, { full:'Storytelling' }
   ];
 
   const ROWS = [
@@ -218,43 +236,36 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
     'Forecast / Planning',
     'Growth Experiments',
     'Decks / Narratives',
-    'Ops Intelligence'
+    'Ops Intelligence',
   ];
 
-  // 0..5 intensities — Data Jobs
   const MAT_DATA = [
-    /* KPI              Py SQL Flw Spr ML  FAI BI  dbt Qsk Oll  AB  Story Stake OKR */
-    /*0*/ [4, 5, 3, 2, 4, 3, 2, 1, 0, 1,  3,  3,   3,    4],
-    /*1*/ [4, 5, 2, 2, 4, 3, 3, 1, 0, 1,  4,  2,   2,    2],
-    /*2*/ [3, 4, 2, 2, 4, 2, 2, 1, 0, 1,  2,  2,   2,    4],
-    /*3*/ [4, 5, 2, 1, 4, 2, 1, 1, 0, 1,  5,  2,   2,    2],
-    /*4*/ [3, 4, 1, 1, 3, 1, 3, 2, 0, 0,  2,  5,   3,    3],
-    /*5*/ [4, 5, 2, 1, 3, 1, 1, 1, 0, 2,  2,  2,   2,    2]
+    [4,5,3,2,4,3,1,1,0,2,3,3],
+    [4,5,2,2,4,3,2,1,0,2,3,3],
+    [3,4,2,2,4,2,2,1,0,1,2,2],
+    [4,5,2,1,4,2,1,1,0,2,3,3],
+    [3,4,1,1,3,1,2,2,0,0,3,5],
+    [4,5,2,1,3,1,1,1,0,2,2,2],
   ];
-
-  // 0..5 intensities — Business Jobs
   const MAT_BIZ = [
-    /* KPI              Py SQL Flw Spr ML  FAI BI  dbt Qsk Oll  AB  Story Stake OKR */
-    /*0*/ [2, 4, 0, 0, 1, 0, 4, 2, 0, 0,  3,  4,   4,    5],
-    /*1*/ [2, 4, 0, 0, 1, 0, 4, 2, 0, 0,  4,  3,   3,    3],
-    /*2*/ [1, 3, 0, 0, 1, 0, 3, 2, 0, 0,  1,  3,   3,    5],
-    /*3*/ [1, 3, 0, 0, 0, 0, 3, 2, 0, 0,  5,  3,   3,    2],
-    /*4*/ [1, 3, 0, 0, 0, 0, 4, 3, 0, 0,  2,  5,   4,    3],
-    /*5*/ [1, 4, 0, 0, 0, 0, 3, 2, 0, 0,  2,  3,   3,    3]
+    [3,5,1,0,2,0,4,2,0,0,5,4],
+    [3,5,1,0,2,0,4,2,0,0,5,4],
+    [2,4,0,0,2,0,4,2,0,0,4,4],
+    [2,4,0,0,1,0,3,2,0,0,5,4],
+    [2,4,0,0,1,0,4,3,0,0,5,5],
+    [2,5,0,0,1,0,3,2,0,0,4,3],
   ];
 
-  const fill = (v) => `rgba(37,99,235,${Math.max(0.12, v/5)})`;
+  const fill = v => `rgba(37,99,235,${Math.max(0.12, v/5)})`;
 
   function render(rows, matrix){
     grid.style.setProperty('--cols', HM_TOOLS.length);
 
-    // header
     head.className = 'row head';
-    head.innerHTML = `<div class="cell y"></div>` + HM_TOOLS
-      .map((t,i)=>`<div class="cell x" data-col="${i+1}" title="${t.full}">${t.full}</div>`)
-      .join('');
+    head.innerHTML = `<div class="cell y"></div>` + HM_TOOLS.map((t,i)=>`
+      <div class="cell x" data-col="${i+1}" title="${t.full}">${t.full}</div>
+    `).join('');
 
-    // body
     body.innerHTML = rows.map((r,ri)=>`
       <div class="row">
         <div class="cell y">${r}</div>
@@ -266,20 +277,22 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
       </div>
     `).join('');
 
-    // click to focus/unfocus a column
     head.querySelectorAll('.x').forEach(el=>{
       el.addEventListener('click', ()=>{
         const col = el.getAttribute('data-col');
-        if (grid.dataset.focus === col) {
+        if (grid.dataset.focus && grid.dataset.focus === col) {
           delete grid.dataset.focus;
-          head.querySelectorAll('.x').forEach(x=>x.removeAttribute('data-col'));
-          body.querySelectorAll('.cell[data-col]').forEach(c=>c.setAttribute('data-col', c.getAttribute('data-col').replace('F','')));
-          return;
+          head.querySelectorAll('.x').forEach(x=>x.removeAttribute('data-col-focus'));
+        } else {
+          grid.dataset.focus = col;
+          head.querySelectorAll('.x').forEach(x=>x.removeAttribute('data-col-focus'));
+          el.setAttribute('data-col-focus','');
         }
-        grid.dataset.focus = col;
-        head.querySelectorAll('.x').forEach(x=>x.removeAttribute('data-col'));
-        el.setAttribute('data-col','F');
         body.querySelectorAll('.cell[data-col]').forEach(c=>{
+          c.setAttribute('data-col', c.getAttribute('data-col').replace('F',''));
+          if (c.getAttribute('data-col') === col) c.setAttribute('data-col','F');
+        });
+        head.querySelectorAll('.x').forEach(c=>{
           c.setAttribute('data-col', c.getAttribute('data-col').replace('F',''));
           if (c.getAttribute('data-col') === col) c.setAttribute('data-col','F');
         });
@@ -287,22 +300,13 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
     });
   }
 
-  // tabs
   function setMode(m){
-    if (m === 'data'){
-      tabData.classList.add('on'); tabData.setAttribute('aria-pressed','true');
-      tabBiz.classList.remove('on'); tabBiz.setAttribute('aria-pressed','false');
-      render(ROWS, MAT_DATA);
-    } else {
-      tabBiz.classList.add('on'); tabBiz.setAttribute('aria-pressed','true');
-      tabData.classList.remove('on'); tabData.setAttribute('aria-pressed','false');
-      render(ROWS, MAT_BIZ);
-    }
+    if (m === 'data'){ tabData.classList.add('on'); tabBiz.classList.remove('on'); render(ROWS, MAT_DATA); }
+    else { tabBiz.classList.add('on'); tabData.classList.remove('on'); render(ROWS, MAT_BIZ); }
   }
+
   tabData.addEventListener('click', ()=>setMode('data'));
   tabBiz .addEventListener('click', ()=>setMode('biz'));
-
-  // init
   setMode('data');
 })();
 </script>
