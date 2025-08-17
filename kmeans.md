@@ -13,6 +13,11 @@ permalink: /labs/kmeans/
 </div>
 <canvas id="km" width="720" height="440" style="border:1px solid #e5e7eb;border-radius:10px"></canvas>
 
+<!-- Share controls (outside toolbar) -->
+<div class="share-row" style="margin-top:10px">
+  <button id="shareLink"  class="km-btn">Share setup</button>
+  <button id="resetState" class="km-btn">Reset parameters</button>
+</div>
 
 <style>
 .km-toolbar{display:flex;gap:8px;margin-bottom:8px}
@@ -21,6 +26,8 @@ permalink: /labs/kmeans/
 html[data-theme="dark"] #km{border-color:#1f2937}
 html[data-theme="dark"] .km-toolbar button{background:#0f172a;border-color:#1f2937;color:#e8eef7}
 </style>
+
+<script src="/assets/js/share-state.js"></script>
 
 <script>
 // 1) Load initial state (defaults if no query present)
@@ -36,9 +43,6 @@ function persist(){ StateShare.save({ k: currentK, pts: currentPointsArray }); }
 document.getElementById('shareLink').onclick = e => StateShare.copyLink(e.target);
 document.getElementById('resetState').onclick = () => StateShare.reset();
 </script>
-
-<button id="shareLink">Share setup</button>
-<button id="resetState">Reset parameters</button>
 
 <script>
 (function(){
@@ -103,8 +107,6 @@ document.getElementById('resetState').onclick = () => StateShare.reset();
 })();
 </script>
 
-
-<script src="/assets/js/share-state.js"></script>
 
 
 
