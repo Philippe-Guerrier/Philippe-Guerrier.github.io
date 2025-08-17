@@ -27,7 +27,7 @@ _Last updated: 2025-08-17_
 - **Data modeling**: dimensional modeling; **dbt** (learning basics).
 
 ## Databases & Storage
-- **SQL engines**: PostgreSQL (when available), **MySQL**, SQLite for quick local work. :contentReference[oaicite:0]{index=0}
+- **SQL engines**: PostgreSQL (when available), **MySQL**, SQLite for quick local work.
 
 ## Cloud
 - **Platforms**: Google Cloud Platform, Microsoft Azure.
@@ -45,13 +45,13 @@ _Last updated: 2025-08-17_
 **Web/General**: HTML/CSS/JS, Markdown, VS Code.
 
 ## Representative projects (what these tools power)
-- **PulseFlow AI** — offline music identifier & recommender using CLAP embeddings + FAISS; smooth transitions; fully on-device. :contentReference[oaicite:1]{index=1}  
-- **Scrape-LLM (local)** — lightweight scraper + local LLM/vision (Ollama/HF) for concise page summaries & image sampling. :contentReference[oaicite:2]{index=2}  
-- **Real-Time Market Sentiment Dashboard** — streaming news/Reddit pipeline with parallel sentiment and auto write-ups. :contentReference[oaicite:3]{index=3}
+- **PulseFlow AI** — offline music identifier & recommender using CLAP embeddings + FAISS; smooth transitions; fully on-device.
+- **Scrape-LLM (local)** — lightweight scraper + local LLM/vision (Ollama/HF) for concise page summaries & image sampling.
+- **Real-Time Market Sentiment Dashboard** — streaming news/Reddit pipeline with parallel sentiment and auto write-ups.
 
 ## Profiles & links
-- **Portfolio (Google Sites)**: https://sites.google.com/view/philippeguerrier/ :contentReference[oaicite:4]{index=4}  
-- **GitHub Pages**: https://philippe-guerrier.github.io/ :contentReference[oaicite:5]{index=5}  
+- **Portfolio (Google Sites)**: https://sites.google.com/view/philippeguerrier/
+- **GitHub Pages**: https://philippe-guerrier.github.io/
 - **LinkedIn**: https://www.linkedin.com/in/philippe-guerrier1/
 
 ---
