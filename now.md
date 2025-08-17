@@ -52,7 +52,7 @@ _Last updated: 2025‑08‑14_
 
   const map = L.map('open-map', {
     zoomControl: true,
-    scrollWheelZoom: false,   // disable wheel zoom
+    scrollWheelZoom: true,   // enable wheel zoom
     dragging: true,
     tap: false,
     worldCopyJump: true
