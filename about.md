@@ -82,9 +82,8 @@ AI for music/media, ML systems, robotics, AI in medicine, and quantum/optimizati
       ['West Palm Beach, Florida',   26.7153, -80.0534],
       ['Bielefeld, Germany',         52.0302,   8.5325],
       ['Miami, Florida',             25.7617, -80.1918],
-      ['Versailles, France',         48.8049,   2.1204],
       ['Saclay, France',             48.7322,   2.1697],
-      ['Paris, France',              48.8566,   2.3522]
+      ['Versailles, France',         48.8049,   2.1204]
     ];
 
     const bounds = [];
