@@ -6,7 +6,7 @@ permalink: /now/
 
 [Home](/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
-## World Clocks
+## Time Zones
 
 <!-- top of now.md -->
 <p><strong>Open to:</strong> <span class="chip">Paris</span> <span class="chip">Berlin</span> <span class="chip">London</span> …</p>
