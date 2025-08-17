@@ -113,7 +113,7 @@ const SPOTLIGHT = [
 <!-- ===== /Spotlight 2.0 ===== -->
 
 
-<!-- ===== Stack Heatmap (responsive) ===== -->
+<!-- ===== Stack Heatmap (responsive, compact fix) ===== -->
 <section class="hm">
   <h2>Stack Heatmap</h2>
   <p class="hm-sub">How my tooling shows up across two “modes” of work.</p>
@@ -156,7 +156,7 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
   overflow:auto; border:1px solid var(--bd); border-radius:12px; padding:10px; 
   background:transparent;
 }
-.hm-grid .row{ display:grid; gap:var(--gap); grid-template-columns: 180px repeat(var(--cols), var(--cell)); align-items:center; }
+.hm-grid .row{ display:grid; gap:var(--gap); grid-template-columns: 200px repeat(var(--cols), var(--cell)); align-items:center; }
 .hm-grid .row + .row{ margin-top:var(--gap) }
 
 .hm-grid .cell{
@@ -171,6 +171,7 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 .hm-grid .x{
   font-weight:600; border:none; background:transparent; width:var(--cell);
   display:flex; align-items:center; justify-content:center; text-align:center;
+  overflow:hidden; text-overflow:ellipsis; /* prevent spill before tight mode kicks in */
 }
 .hm-grid .x .short{ display:none; }
 .hm-grid .x .full{ display:block; }
@@ -179,10 +180,18 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 .hm-grid.tight { --cell:34px; }
 .hm-grid.tight .x{ 
   writing-mode:vertical-rl; transform:rotate(180deg); line-height:1;
-  padding:6px 4px;
+  padding:6px 4px; font-size:.8rem;
 }
 .hm-grid.tight .x .full{ display:none; }
 .hm-grid.tight .x .short{ display:block; }
+
+/* extra safety: force compact on narrower viewports */
+@media (max-width: 1200px){
+  .hm-grid{ --cell:34px; }
+  .hm-grid .x{ writing-mode:vertical-rl; transform:rotate(180deg); line-height:1; padding:6px 4px; font-size:.8rem; }
+  .hm-grid .x .full{ display:none; }
+  .hm-grid .x .short{ display:block; }
+}
 
 /* column focus */
 .hm-grid[data-focus] .rows .cell[data-col],
@@ -220,7 +229,6 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
     { short:'Oll',   full:'Ollama' }
   ];
 
-  // rows (kept close to your sections)
   const ROWS = [
     'KPI / metrics',
     'Funnel / Cohorts',
@@ -232,12 +240,12 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 
   // matrices: 0..5 intensity (adjust freely)
   const MAT_DATA = [
-    [4,5,3,2,4,3,1,1,0,2], // KPI
-    [4,5,2,2,4,3,2,1,0,2], // Funnel
-    [3,4,2,2,4,2,2,1,0,1], // Forecast
-    [4,5,2,1,4,2,1,1,0,2], // Growth
-    [3,4,1,1,3,1,2,2,0,0], // Decks
-    [4,5,2,1,3,1,1,1,0,2]  // Ops
+    [4,5,3,2,4,3,1,1,0,2],
+    [4,5,2,2,4,3,2,1,0,2],
+    [3,4,2,2,4,2,2,1,0,1],
+    [4,5,2,1,4,2,1,1,0,2],
+    [3,4,1,1,3,1,2,2,0,0],
+    [4,5,2,1,3,1,1,1,0,2]
   ];
   const MAT_BIZ = [
     [3,5,1,0,2,0,4,2,0,0],
@@ -248,7 +256,6 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
     [2,5,0,0,1,0,3,2,0,0]
   ];
 
-  // map 0..5 → RGBA fill
   const fill = (v) => `rgba(37,99,235,${Math.max(0.12, v/5)})`;
 
   function render(rows, matrix){
@@ -296,14 +303,21 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
     autoTighten();
   }
 
-  // auto-compact if the grid overflows horizontally
+  // robust compact detection + safety hooks
   function autoTighten(){
     grid.classList.remove('tight');
     requestAnimationFrame(()=>{
-      if (grid.scrollWidth > grid.clientWidth) grid.classList.add('tight');
+      const overGrid = grid.scrollWidth - grid.clientWidth > 2;
+      const overHead = head.scrollWidth - grid.clientWidth > 2;
+      if (overGrid || overHead) grid.classList.add('tight');
     });
   }
   window.addEventListener('resize', autoTighten);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(autoTighten);
+  } else {
+    setTimeout(autoTighten, 0);
+  }
 
   // tabs
   function setMode(m){
