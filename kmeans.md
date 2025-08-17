@@ -7,10 +7,11 @@ permalink: /labs/kmeans/
 
 <div class="km-toolbar">
   <label>K <input id="kval" type="range" min="2" max="6" value="3"></label>
-  <button id="reset">Reset points</button>
-  <button id="step">Step</button>
-  <button id="auto">Auto ▷</button>
+  <button id="reset" class="km-btn">Reset points</button>
+  <button id="step"  class="km-btn">Step</button>
+  <button id="auto"  class="km-btn">Auto ▷</button>
 </div>
+
 <canvas id="km" width="720" height="440" style="border:1px solid #e5e7eb;border-radius:10px"></canvas>
 
 <!-- Share controls (outside toolbar) -->
@@ -20,12 +21,16 @@ permalink: /labs/kmeans/
 </div>
 
 <style>
-.km-toolbar{display:flex;gap:8px;margin-bottom:8px}
-.km-toolbar button{padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer}
+.km-toolbar{display:flex;gap:8px;margin-bottom:8px;align-items:center}
 .km-toolbar input[type=range]{vertical-align:middle}
+
+/* buttons: both toolbar + share row */
+.km-btn{padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer}
+.km-btn:hover{background:#f8fafc}
 html[data-theme="dark"] #km{border-color:#1f2937}
-html[data-theme="dark"] .km-toolbar button{background:#0f172a;border-color:#1f2937;color:#e8eef7}
+html[data-theme="dark"] .km-btn{background:#0f172a;border-color:#1f2937;color:#e8eef7}
 </style>
+
 
 <script src="/assets/js/share-state.js"></script>
 
