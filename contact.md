@@ -14,7 +14,7 @@ permalink: /contact/
 
 
 <section class="contact-hero">
-  <h1>Say hi 👋</h1>
+  <h1>Don't hesitate to contact me!</h1>
   <p>Pick up the envelope to reveal the goods.</p>
 </section>
 
