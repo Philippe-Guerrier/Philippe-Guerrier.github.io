@@ -25,6 +25,22 @@ html[data-theme="dark"] .km-toolbar button{background:#0f172a;border-color:#1f29
 </style>
 
 <script>
+// 1) Load initial state (defaults if no query present)
+const state = StateShare.load({ k:3, pts:[] }); // pts = [[x,y], ...]
+
+// TODO: initialize your UI from state.k and state.pts here
+// e.g., set k slider/input, draw existing points
+
+// 2) Whenever k or points change, call:
+function persist(){ StateShare.save({ k: currentK, pts: currentPointsArray }); }
+
+// 3) Wire buttons
+document.getElementById('shareLink').onclick = e => StateShare.copyLink(e.target);
+document.getElementById('resetState').onclick = () => StateShare.reset();
+</script>
+
+
+<script>
 (function(){
   const W=720,H=440,c=document.getElementById('km'),g=c.getContext('2d');
   const col=['#2563eb','#16a34a','#f59e0b','#ef4444','#a855f7','#06b6d4'];
@@ -86,6 +102,7 @@ html[data-theme="dark"] .km-toolbar button{background:#0f172a;border-color:#1f29
   init();
 })();
 </script>
+
 
 <script src="/assets/js/share-state.js"></script>
 
