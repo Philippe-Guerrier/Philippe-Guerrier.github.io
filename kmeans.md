@@ -13,6 +13,9 @@ permalink: /labs/kmeans/
 </div>
 <canvas id="km" width="720" height="440" style="border:1px solid #e5e7eb;border-radius:10px"></canvas>
 
+<button id="shareLink">Share setup</button>
+<button id="resetState">Reset</button>
+
 <style>
 .km-toolbar{display:flex;gap:8px;margin-bottom:8px}
 .km-toolbar button{padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer}
@@ -83,3 +86,10 @@ html[data-theme="dark"] .km-toolbar button{background:#0f172a;border-color:#1f29
   init();
 })();
 </script>
+
+<script src="/assets/js/share-state.js"></script>
+
+
+
+
+
