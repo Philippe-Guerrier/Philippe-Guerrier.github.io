@@ -60,7 +60,7 @@ Cost reduction, benefit growth, and customer satisfaction improvements via predi
   // ——— Map ———
   const map = L.map('exp-map', {
     zoomControl: true,
-    scrollWheelZoom: false,     // no scroll hijack
+    scrollWheelZoom: true,     // enable scroll hijack
     dragging: true,
     tap: false,
     worldCopyJump: true
