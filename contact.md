@@ -31,9 +31,9 @@ permalink: /contact/
     <div class="c-links">
       <a class="btn" href="mailto:philippeguerrier01@gmail.com?subject=Hello%20from%20your%20site">Email</a>
       <a class="btn" href="https://www.linkedin.com/in/philippe-guerrier1/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/Philippe-Guerrier" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://profile.indeed.com/p/philippeg-14mjz3t" target="_blank" rel="noopener">Indeed</a>
     </div>
-    <p class="tiny">Tip: include role, location (hybrid), and timeline for a faster reply.</p>
+    <p class="tiny">Tip: I hope that my profile has convinced you!.</p>
   </div>
 </div>
 
