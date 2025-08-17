@@ -42,7 +42,7 @@ _Last updated: 2025-08-17_
 
 ## Web / App
 - **Frontend**: HTML/CSS/JS.
-**Web/General**: HTML/CSS/JS, Markdown, VS Code.
+- **Web/General**: HTML/CSS/JS, Markdown, VS Code.
 
 ## Profiles & links
 - **Portfolio (Google Sites)**: https://sites.google.com/view/philippeguerrier/
