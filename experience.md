@@ -25,94 +25,71 @@ Cost reduction, benefit growth, and customer satisfaction improvements via predi
 
 
 
-## Where I've worked & studied
+## Where I’ve worked (map)
 
-<div class="pillrow">
-  {% for p in site.data.places.worked %}<span class="pill pill-work">{{ p.name }}</span>{% endfor %}
-  {% for p in site.data.places.study  %}<span class="pill pill-study">{{ p.name }}</span>{% endfor %}
+<div class="map-wrap">
+  <div id="exp-map" class="map"></div>
 </div>
 
-<div id="map-exp" aria-label="Map of cities I've worked and studied in"></div>
-
-<!-- Leaflet (keep CSS before map JS) -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+  /* container = wrapper (controls radius/overflow) + inner map div (fills wrapper) */
+  .map-wrap{height:360px;border:1px solid var(--border,#e5e7eb);border-radius:12px;overflow:hidden;margin:12px 0 28px}
+  .map{height:100%;width:100%}
+  /* readable labels in both themes */
+  .leaflet-tooltip{padding:3px 6px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;color:#111827}
+  html[data-theme="dark"] .leaflet-tooltip{border-color:#1f2937;background:#111827;color:#e8eef7}
+  /* keep map tiles looking okay in dark */
+  html[data-theme="dark"] .leaflet-container{filter:saturate(.9) brightness(.95)}
+</style>
 
 <script>
 (function(){
-  const WORKED = {{ site.data.places.worked | jsonify }} || [];
-  const STUDY  = {{ site.data.places.study  | jsonify }} || [];
-  const points = WORKED.concat(STUDY);
+  if (!window.L) return; // safety
 
-  // Init
-  const map = L.map('map-exp', { scrollWheelZoom:false, tap:true });
+  // ——— Data (deduped by city) ———
+  const worked = [
+    { name:'Paris, France',   lat:48.8566, lng:2.3522,
+      info:'Deezer · Uber · Poke Break · Streamglish' },
+    { name:'Munich, Germany', lat:48.1351, lng:11.5820,
+      info:'Amazon Business' }
+  ];
 
-  function tileFor(theme){
-    if (theme === 'dark') {
-      return L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-        { attribution: '&copy; OpenStreetMap & CARTO', maxZoom: 19 });
-    }
-    return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 });
-  }
-  let tiles = tileFor(document.documentElement.getAttribute('data-theme'));
-  tiles.addTo(map);
-
-  const workedStyle = { radius:7, color:'#ef4444', fillColor:'#ef4444', fillOpacity:0.9, weight:1 };
-  const studyStyle  = { radius:7, color:'#6366f1', fillColor:'#6366f1', fillOpacity:0.9, weight:1 };
-
-  WORKED.forEach(p => {
-    const m = L.circleMarker([p.lat, p.lon], workedStyle).addTo(map);
-    m.bindPopup(`<strong>${p.name}</strong><br>${(p.orgs||[]).join('<br>')}`);
-    m.bindTooltip(p.name, {permanent:true, direction:'top', className:'map-label'});
-  });
-  STUDY.forEach(p => {
-    const m = L.circleMarker([p.lat, p.lon], studyStyle).addTo(map);
-    m.bindPopup(`<strong>${p.name}</strong><br>${(p.orgs||[]).join('<br>')}`);
-    m.bindTooltip(p.name, {permanent:true, direction:'top', className:'map-label'});
+  // ——— Map ———
+  const map = L.map('exp-map', {
+    zoomControl: true,
+    scrollWheelZoom: false,     // no scroll hijack
+    dragging: true,
+    tap: false,
+    worldCopyJump: true
   });
 
-  if (points.length){
-    const b = L.latLngBounds(points.map(p => [p.lat, p.lon]));
-    map.fitBounds(b.pad(0.25));
-  } else {
-    map.setView([48.8566, 2.3522], 5); // fallback: Europe
-  }
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'&copy; OpenStreetMap contributors', detectRetina:true, maxZoom:19
+  }).addTo(map);
 
-  // Switch tiles on theme change
-  new MutationObserver(() => {
-    map.removeLayer(tiles);
-    tiles = tileFor(document.documentElement.getAttribute('data-theme'));
-    tiles.addTo(map);
-  }).observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] });
+  // markers + always-visible labels
+  const markers = worked.map(p => {
+    const m = L.circleMarker([p.lat, p.lng], {
+      radius:7, color:'#2563eb', weight:2, fillColor:'#2563eb', fillOpacity:.35
+    }).addTo(map);
+    m.bindTooltip(p.name, {permanent:true, direction:'top', offset:[0,-6]});
+    m.bindPopup(`<strong>${p.name}</strong><br>${p.info}`);
+    return m;
+  });
+
+  // fit bounds & keep user inside the world (prevents grey edges)
+  const bounds = L.featureGroup(markers).getBounds();
+  map.fitBounds(bounds, {padding:[24,24]});
+  map.setMaxBounds([[-85,-180],[85,180]]);
+
+  // fix “grey bar” when the map renders before fonts/layout settle
+  const fix = () => map.invalidateSize();
+  window.addEventListener('load', fix);
+  setTimeout(fix, 350);
 })();
 </script>
-
-<style>
-#map-exp{ height:340px; border:1px solid var(--bd,#e5e7eb); border-radius:12px; margin:12px 0 6px; }
-.pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 10px; }
-.pill{ padding:6px 10px; border-radius:999px; font-size:.9rem; border:1px solid var(--bd,#e5e7eb); }
-.pill-work{ background:#fee2e2; color:#991b1b; }   /* worked = red-ish */
-.pill-study{ background:#e0e7ff; color:#312e81; }  /* study = indigo-ish */
-html[data-theme="dark"] .pill{ border-color:#1f2937; }
-html[data-theme="dark"] .pill-work{ background:#451a1a; color:#fecaca; }
-html[data-theme="dark"] .pill-study{ background:#1e1b4b; color:#c7d2fe; }
-
-/* Always-visible name labels on the map */
-.map-label{
-  background: rgba(255,255,255,.92);
-  color:#0b1220;
-  border:1px solid #e5e7eb;
-  border-radius:6px;
-  padding:2px 6px;
-  font-size:.85rem;
-  box-shadow:0 1px 4px rgba(0,0,0,.08);
-}
-html[data-theme="dark"] .map-label{
-  background: rgba(17,24,39,.92);
-  color:#e8eef7;
-  border-color:#1f2937;
-}
-</style>
 
 
