@@ -112,8 +112,7 @@ const SPOTLIGHT = [
 </script>
 <!-- ===== /Spotlight 2.0 ===== -->
 
-
-<!-- ===== Stack Heatmap (angled headers + wider text zone) ===== -->
+<!-- ===== Stack Heatmap (vertical headers + business skills) ===== -->
 <section class="hm">
   <h2>Stack Heatmap</h2>
   <p class="hm-sub">How my tooling shows up across two “modes” of work.</p>
@@ -138,7 +137,7 @@ const SPOTLIGHT = [
 
 <style>
 /* ---- layout / theme vars ---- */
-.hm { --cell: 42px; --gap: 8px; --ycol: 230px; --bd:#e5e7eb; --tx:#0b1220; --muted:#6b7280; --accent:#2563eb; }
+.hm { --cell: 36px; --gap: 8px; --ycol: 260px; --bd:#e5e7eb; --tx:#0b1220; --muted:#6b7280; --accent:#2563eb; }
 html[data-theme="dark"] .hm { --bd:#1f2937; --tx:#e8eef7; --muted:#9aa4b5; --accent:#60a5fa; }
 
 .hm h2 { margin-bottom:.25rem }
@@ -166,62 +165,24 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
   user-select:none;
 }
 .hm-grid .y{
-  width:auto; justify-content:flex-start; padding:0 6px; border:none; background:transparent; font-weight:600;
+  width:auto; justify-content:flex-start; padding:0 6px; border:none; background:transparent; font-weight:700;
 }
+
+/* always-vertical headers, smaller font */
 .hm-grid .x{
-  font-weight:600; border:none; background:transparent; width:var(--cell);
+  font-weight:700; border:none; background:transparent; width:var(--cell);
   display:flex; align-items:center; justify-content:center; text-align:center;
-  overflow:hidden; text-overflow:ellipsis;
-}
-.hm-grid .x .short{ display:none; }
-.hm-grid .x .full{ display:block; }
-
-/* ---------- ANGLED MODE (fits more without going vertical) ---------- */
-.hm-grid.angled { --cell: 36px; }
-.hm-grid.angled .row.head{ align-items:end; }
-.hm-grid.angled .x{ height: calc(var(--cell) + 28px); }
-.hm-grid.angled .x .full{
-  display:block;
-  transform: rotate(-32deg);
-  transform-origin: left bottom;
-  white-space:nowrap;
-  line-height:1;
-  translate: 0 6px;   /* nudge down to sit on baseline */
-}
-.hm-grid.angled .x .short{ display:none; }
-
-/* ---------- TIGHT MODE (true compact vertical) ---------- */
-.hm-grid.tight { --cell:34px; }
-.hm-grid.tight .x{ 
-  writing-mode:vertical-rl; transform:rotate(180deg); line-height:1;
-  padding:6px 4px; font-size:.8rem;
-}
-.hm-grid.tight .x .full{ display:none; }
-.hm-grid.tight .x .short{ display:block; }
-
-/* safety: if viewport is small, prefer at least angled */
-@media (max-width: 1200px){
-  .hm-grid:not(.tight){ --cell:36px; }
-  .hm-grid:not(.tight) .row.head{ align-items:end; }
-  .hm-grid:not(.tight) .x{ height: calc(var(--cell) + 28px); }
-  .hm-grid:not(.tight) .x .full{
-    transform: rotate(-32deg);
-    transform-origin: left bottom;
-    white-space:nowrap; line-height:1; translate: 0 6px;
-  }
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  line-height:1; font-size:.82rem; letter-spacing:.2px; padding:6px 2px;
 }
 
-/* column focus */
 .hm-grid[data-focus] .rows .cell[data-col],
 .hm-grid[data-focus] .head .cell[data-col]{ opacity:.35; }
 .hm-grid[data-focus] .rows .cell[data-col="F"],
 .hm-grid[data-focus] .head .cell[data-col="F"]{ opacity:1; }
 
-/* legend */
 .hm-legend{ display:flex; align-items:center; gap:10px; margin:.75rem 0 }
 .hm-legend .bar{ width:140px; height:8px; border-radius:999px; background:linear-gradient(90deg, rgba(37,99,235,.12), rgba(37,99,235,.9)); border:1px solid var(--bd) }
-
-/* tip */
 .hm-tip{ color:var(--muted); margin-top:4px }
 </style>
 
@@ -233,18 +194,22 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
   const tabData = document.getElementById('hmTabData');
   const tabBiz  = document.getElementById('hmTabBiz');
 
-  // --- tools (short + full for responsive headers) ---
+  // tools + business skills (columns)
   const HM_TOOLS = [
-    { short:'Py',    full:'Python' },
-    { short:'SQL',   full:'SQL' },
-    { short:'Flow',  full:'Airflow' },
-    { short:'Spark', full:'Spark' },
-    { short:'ML',    full:'ML (TF/PT)' },
-    { short:'FAISS', full:'FAISS' },
-    { short:'BI',    full:'Tableau/BI' },
-    { short:'dbt',   full:'dbt' },
-    { short:'Qsk',   full:'Qiskit' },
-    { short:'Oll',   full:'Ollama' }
+    { full:'Python' },
+    { full:'SQL' },
+    { full:'Airflow' },
+    { full:'Spark' },
+    { full:'ML (TF/PT)' },
+    { full:'FAISS' },
+    { full:'Tableau/BI' },
+    { full:'dbt' },
+    { full:'Qiskit' },
+    { full:'Ollama' },
+    { full:'Business Acumen' },
+    { full:'Storytelling' },
+    { full:'Stakeholders' },
+    { full:'Fuunel' }
   ];
 
   const ROWS = [
@@ -256,22 +221,26 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
     'Ops Intelligence'
   ];
 
-  // matrices: 0..5 intensity (adjust freely)
+  // 0..5 intensities — Data Jobs
   const MAT_DATA = [
-    [4,5,3,2,4,3,1,1,0,2],
-    [4,5,2,2,4,3,2,1,0,2],
-    [3,4,2,2,4,2,2,1,0,1],
-    [4,5,2,1,4,2,1,1,0,2],
-    [3,4,1,1,3,1,2,2,0,0],
-    [4,5,2,1,3,1,1,1,0,2]
+    /* KPI              Py SQL Flw Spr ML  FAI BI  dbt Qsk Oll  AB  Story Stake OKR */
+    /*0*/ [4, 5, 3, 2, 4, 3, 2, 1, 0, 1,  3,  3,   3,    4],
+    /*1*/ [4, 5, 2, 2, 4, 3, 3, 1, 0, 1,  4,  2,   2,    2],
+    /*2*/ [3, 4, 2, 2, 4, 2, 2, 1, 0, 1,  2,  2,   2,    4],
+    /*3*/ [4, 5, 2, 1, 4, 2, 1, 1, 0, 1,  5,  2,   2,    2],
+    /*4*/ [3, 4, 1, 1, 3, 1, 3, 2, 0, 0,  2,  5,   3,    3],
+    /*5*/ [4, 5, 2, 1, 3, 1, 1, 1, 0, 2,  2,  2,   2,    2]
   ];
+
+  // 0..5 intensities — Business Jobs
   const MAT_BIZ = [
-    [3,5,1,0,2,0,4,2,0,0],
-    [3,5,1,0,2,0,4,2,0,0],
-    [2,4,0,0,2,0,4,2,0,0],
-    [2,4,0,0,1,0,3,2,0,0],
-    [2,4,0,0,1,0,4,3,0,0],
-    [2,5,0,0,1,0,3,2,0,0]
+    /* KPI              Py SQL Flw Spr ML  FAI BI  dbt Qsk Oll  AB  Story Stake OKR */
+    /*0*/ [2, 4, 0, 0, 1, 0, 4, 2, 0, 0,  3,  4,   4,    5],
+    /*1*/ [2, 4, 0, 0, 1, 0, 4, 2, 0, 0,  4,  3,   3,    3],
+    /*2*/ [1, 3, 0, 0, 1, 0, 3, 2, 0, 0,  1,  3,   3,    5],
+    /*3*/ [1, 3, 0, 0, 0, 0, 3, 2, 0, 0,  5,  3,   3,    2],
+    /*4*/ [1, 3, 0, 0, 0, 0, 4, 3, 0, 0,  2,  5,   4,    3],
+    /*5*/ [1, 4, 0, 0, 0, 0, 3, 2, 0, 0,  2,  3,   3,    3]
   ];
 
   const fill = (v) => `rgba(37,99,235,${Math.max(0.12, v/5)})`;
@@ -279,14 +248,13 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
   function render(rows, matrix){
     grid.style.setProperty('--cols', HM_TOOLS.length);
 
+    // header
     head.className = 'row head';
-    head.innerHTML = `<div class="cell y"></div>` + HM_TOOLS.map((t,i)=>`
-      <div class="cell x" data-col="${i+1}" title="${t.full}">
-        <span class="full">${t.full}</span>
-        <span class="short">${t.short}</span>
-      </div>
-    `).join('');
+    head.innerHTML = `<div class="cell y"></div>` + HM_TOOLS
+      .map((t,i)=>`<div class="cell x" data-col="${i+1}" title="${t.full}">${t.full}</div>`)
+      .join('');
 
+    // body
     body.innerHTML = rows.map((r,ri)=>`
       <div class="row">
         <div class="cell y">${r}</div>
@@ -317,34 +285,7 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
         });
       });
     });
-
-    fitHeaders();
   }
-
-  // Decide between: normal → angled → tight
-  function fitHeaders(){
-    grid.classList.remove('angled','tight');
-
-    requestAnimationFrame(()=>{
-      const over = grid.scrollWidth - grid.clientWidth;
-      if (over <= 2) return;                // fits → normal
-      if (over <= 160) {                    // a bit of overflow → angled
-        grid.classList.add('angled');
-        // If still overflowing after angle, fall back to tight
-        requestAnimationFrame(()=>{
-          if (grid.scrollWidth - grid.clientWidth > 2) {
-            grid.classList.remove('angled');
-            grid.classList.add('tight');
-          }
-        });
-      } else {
-        grid.classList.add('tight');        // large overflow → vertical
-      }
-    });
-  }
-
-  window.addEventListener('resize', fitHeaders);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeaders);
 
   // tabs
   function setMode(m){
