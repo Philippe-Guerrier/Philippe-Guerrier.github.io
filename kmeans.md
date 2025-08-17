@@ -14,7 +14,7 @@ permalink: /labs/kmeans/
 <canvas id="km" width="720" height="440" style="border:1px solid #e5e7eb;border-radius:10px"></canvas>
 
 <button id="shareLink">Share setup</button>
-<button id="resetState">Reset</button>
+<button id="resetState">Reset parameters</button>
 
 <style>
 .km-toolbar{display:flex;gap:8px;margin-bottom:8px}
