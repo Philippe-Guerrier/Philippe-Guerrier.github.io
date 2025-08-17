@@ -162,102 +162,232 @@ const SPOTLIGHT = [
   });
 })();
 
-/* ---------- Heatmap data ---------- */
-const HM_TOOLS = ['Python','SQL','Airflow','Spark','ML (TF/PT)','FAISS','Tableau/BI','dbt','Qiskit','Ollama'];
-const HM_ROWS_DATA = [
-  {label:'ETL & pipelines', notes:['Local jobs','Warehouse ops','DAG schedule','Batch at scale','N/A','N/A','Reporting layer','Modeling','N/A','N/A']},
-  {label:'Feature engineering', notes:['Pandas/Numpy','SQL feats','Orchestration','Spark feats','Prep tensors','Vector build','N/A','Docs','N/A','N/A']},
-  {label:'Experimentation (A/B)', notes:['Analyze','Metric SQL','Schedule checks','N/A','N/A','N/A','Dash KPIs','N/A','N/A','N/A']},
-  {label:'Modeling (ML)', notes:['Training','Feature SQL','N/A','Spark ML','DL train','N/A','Model viz','N/A','N/A','N/A']},
-  {label:'Retrieval / Search', notes:['Prep','Candidate SQL','N/A','N/A','Embed gen','ANN index','N/A','N/A','N/A','Local LLM assist']},
-  {label:'Dashboards & storytelling', notes:['Scripts','Aggregates','N/A','N/A','N/A','N/A','Dashboards','N/A','N/A','N/A']},
-];
-/* Scores 0..5 per cell */
-const MATRIX_DATA = [
-  [5,4,4,3,4,5,2,1,0,3],
-  [5,3,2,4,4,3,1,2,0,0],
-  [5,5,1,0,1,0,5,0,0,0],
-  [4,2,0,3,5,0,1,0,0,0],
-  [3,3,0,0,4,5,0,0,0,4],
-  [3,4,0,0,0,0,5,0,0,0],
-];
-const HM_ROWS_BIZ = [
-  {label:'KPI / metrics', notes:['Py analysis','Core SQL','N/A','N/A','N/A','N/A','Viz','N/A','N/A','N/A']},
-  {label:'Funnel / Cohorts', notes:['Compute','Window SQL','N/A','N/A','N/A','N/A','Viz','N/A','N/A','N/A']},
-  {label:'Forecast / Planning', notes:['Stats','Model SQL','N/A','N/A','Light ML','N/A','Viz','N/A','N/A','N/A']},
-  {label:'Growth Experiments', notes:['Analysis','Event SQL','N/A','N/A','N/A','N/A','Dash','N/A','N/A','N/A']},
-  {label:'Decks / Narratives', notes:['Py charts','SQL pulls','N/A','N/A','N/A','N/A','Presentation','N/A','N/A','N/A']},
-  {label:'Ops Intelligence', notes:['Ops py','Ops SQL','N/A','N/A','N/A','N/A','Ops BI','N/A','N/A','N/A']},
-];
-const MATRIX_BIZ = [
-  [4,5,0,0,1,0,5,0,0,0],
-  [4,5,0,0,1,0,5,0,0,0],
-  [3,4,0,0,3,0,4,0,0,0],
-  [4,5,0,0,1,0,4,0,0,0],
-  [3,4,0,0,0,0,3,0,0,0],
-  [4,5,0,0,0,0,4,0,0,0],
-];
+<!-- ===== Stack Heatmap (responsive) ===== -->
+<section class="hm">
+  <h2>Stack Heatmap</h2>
+  <p>How my tooling shows up across two “modes” of work.</p>
 
-(function heatmap(){
-  const grid = document.getElementById('hmGrid');
-  if(!grid) return;
-  const tip = document.createElement('div'); tip.className='hm-tip'; document.body.appendChild(tip);
+  <div class="hm-tabs">
+    <button data-mode="data" class="on" id="hmTabData">Data Jobs</button>
+    <button data-mode="biz" id="hmTabBiz">Business Jobs</button>
+  </div>
+
+  <div class="hm-grid" id="hmGrid">
+    <div class="row head" id="hmHead"></div>
+    <div class="rows" id="hmBody"></div>
+  </div>
+
+  <div class="hm-legend">
+    <span>Low</span>
+    <span class="bar"><i></i></span>
+    <span>High</span>
+  </div>
+  <p class="hm-tip">Hover a cell for a quick note; click a column to highlight.</p>
+</section>
+
+<style>
+/* ---- layout / theme vars ---- */
+.hm { --cell: 42px; --gap: 8px; --bd:#e5e7eb; --tx:#0b1220; --muted:#6b7280; --accent:#2563eb; }
+html[data-theme="dark"] .hm { --bd:#1f2937; --tx:#e8eef7; --muted:#9aa4b5; --accent:#60a5fa; }
+
+.hm h2 { margin-bottom:.25rem }
+.hm p { margin:.25rem 0 1rem; color:var(--muted) }
+
+.hm-tabs { display:flex; gap:8px; margin-bottom:10px }
+.hm-tabs button{
+  padding:6px 10px; border:1px solid var(--bd); border-radius:999px;
+  background:#fff; cursor:pointer; color:var(--tx)
+}
+html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
+.hm-tabs .on{ border-color:var(--accent) }
+
+.hm-grid{ 
+  overflow:auto; border:1px solid var(--bd); border-radius:12px; padding:10px; 
+  background:transparent;
+}
+.hm-grid .row{ display:grid; gap:var(--gap); grid-template-columns: 180px repeat(var(--cols), var(--cell)); align-items:center; }
+.hm-grid .row + .row{ margin-top:var(--gap) }
+
+.hm-grid .cell{
+  width:var(--cell); height:var(--cell); border-radius:10px; 
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--bd); background:transparent; color:var(--tx);
+  user-select:none;
+}
+.hm-grid .y{
+  width:auto; justify-content:flex-start; padding:0 6px; border:none; background:transparent; font-weight:600;
+}
+.hm-grid .x{
+  font-weight:600; border:none; background:transparent; width:var(--cell);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+}
+.hm-grid .x .short{ display:none; }
+.hm-grid .x .full{ display:block; }
+
+/* compact mode when space is tight */
+.hm-grid.tight { --cell:34px; }
+.hm-grid.tight .x{ 
+  writing-mode:vertical-rl; transform:rotate(180deg); line-height:1;
+  padding:6px 4px;
+}
+.hm-grid.tight .x .full{ display:none; }
+.hm-grid.tight .x .short{ display:block; }
+
+/* column highlight */
+.hm-grid[data-focus] .rows .cell[data-col],
+.hm-grid[data-focus] .head .cell[data-col]{
+  opacity:.35;
+}
+.hm-grid[data-focus] .rows .cell[data-col="F"],
+.hm-grid[data-focus] .head .cell[data-col="F"]{
+  opacity:1;
+}
+
+/* legend */
+.hm-legend{ display:flex; align-items:center; gap:10px; margin:.75rem 0 }
+.hm-legend .bar{ width:140px; height:8px; border-radius:999px; background:linear-gradient(90deg, rgba(37,99,235,.12), rgba(37,99,235,.9)); border:1px solid var(--bd) }
+.hm-legend .bar i{ display:block; height:100%; border-radius:inherit }
+
+/* tip */
+.hm-tip{ color:var(--muted); margin-top:4px }
+
+/* dark tweaks */
+html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
+</style>
+
+<script>
+(function(){
+  const grid  = document.getElementById('hmGrid');
+  const head  = document.getElementById('hmHead');
+  const body  = document.getElementById('hmBody');
+  const tabData = document.getElementById('hmTabData');
+  const tabBiz  = document.getElementById('hmTabBiz');
+
+  // --- tools (short + full for responsive headers) ---
+  const HM_TOOLS = [
+    { short:'Py',    full:'Python' },
+    { short:'SQL',   full:'SQL' },
+    { short:'Flow',  full:'Airflow' },
+    { short:'Spark', full:'Spark' },
+    { short:'ML',    full:'ML (TF/PT)' },
+    { short:'FAISS', full:'FAISS' },
+    { short:'BI',    full:'Tableau/BI' },
+    { short:'dbt',   full:'dbt' },
+    { short:'Qsk',   full:'Qiskit' },
+    { short:'Oll',   full:'Ollama' },
+  ];
+
+  // rows (kept from your original layout)
+  const ROWS = [
+    'KPI / metrics',
+    'Funnel / Cohorts',
+    'Forecast / Planning',
+    'Growth Experiments',
+    'Decks / Narratives',
+    'Ops Intelligence',
+  ];
+
+  // matrices: 0..5 intensity (adjust freely)
+  const MAT_DATA = [
+    [4,5,3,2,4,3,1,1,0,2], // KPI
+    [4,5,2,2,4,3,2,1,0,2], // Funnel
+    [3,4,2,2,4,2,2,1,0,1], // Forecast
+    [4,5,2,1,4,2,1,1,0,2], // Growth
+    [3,4,1,1,3,1,2,2,0,0], // Decks
+    [4,5,2,1,3,1,1,1,0,2], // Ops
+  ];
+  const MAT_BIZ = [
+    [3,5,1,0,2,0,4,2,0,0],
+    [3,5,1,0,2,0,4,2,0,0],
+    [2,4,0,0,2,0,4,2,0,0],
+    [2,4,0,0,1,0,3,2,0,0],
+    [2,4,0,0,1,0,4,3,0,0],
+    [2,5,0,0,1,0,3,2,0,0],
+  ];
+
+  // map 0..5 → RGBA fill
+  const fill = (v) => `rgba(37,99,235,${Math.max(0.12, v/5)})`;
 
   function render(rows, matrix){
-    grid.innerHTML=''; grid.style.setProperty('--cols', HM_TOOLS.length); grid.style.setProperty('--first','140px');
+    // column count
+    grid.style.setProperty('--cols', HM_TOOLS.length);
 
-    // Header
-    const head = document.createElement('div'); head.className='row head';
-    head.innerHTML = `<div class="cell y"></div>` + HM_TOOLS.map((t,i)=>`<div class="cell x" data-col="${i+1}">${t}</div>`).join('');
-    grid.appendChild(head);
+    // header
+    head.className = 'row head';
+    head.innerHTML = `<div class="cell y"></div>` + HM_TOOLS.map((t,i)=>`
+      <div class="cell x" data-col="${i+1}" title="${t.full}">
+        <span class="full">${t.full}</span>
+        <span class="short">${t.short}</span>
+      </div>
+    `).join('');
 
-    // Rows
-    rows.forEach((r,ri)=>{
-      const row = document.createElement('div'); row.className='row';
-      row.innerHTML = `<div class="cell y">${r.label}</div>` + matrix[ri].map((s,ci)=>{
-        const note = (r.notes||[])[ci] || '';
-        return `<div class="cell v" data-col="${ci+1}" data-score="${s}" style="--s:${s/5}" title="${note}">${s>0? s : ''}</div>`;
-      }).join('');
-      grid.appendChild(row);
-    });
+    // body
+    body.innerHTML = rows.map((r,ri)=>`
+      <div class="row">
+        <div class="cell y">${r}</div>
+        ${HM_TOOLS.map((t,ci)=>{
+          const v = matrix[ri]?.[ci] ?? 0;
+          const note = `${r} × ${t.full}: level ${v}`;
+          return `<div class="cell" data-col="${ci+1}" title="${note}" style="background:${v?fill(v):'transparent'}"></div>`;
+        }).join('')}
+      </div>
+    `).join('');
 
-    // Hover tip (nicer than default title)
-    grid.querySelectorAll('.v').forEach(c=>{
-      c.addEventListener('mouseenter',e=>{
-        const s = +c.getAttribute('data-score');
-        const col = HM_TOOLS[+c.getAttribute('data-col')-1];
-        tip.textContent = (c.title ? `${c.title} — ` : '') + `${s}/5 with ${col}`;
-        tip.style.display='block';
-      });
-      c.addEventListener('mousemove',e=>{
-        tip.style.left = e.pageX+'px'; tip.style.top = e.pageY+'px';
-      });
-      c.addEventListener('mouseleave',()=> tip.style.display='none');
-    });
-
-    // Click column to focus
-    grid.querySelectorAll('.x').forEach(x=>{
-      x.addEventListener('click',()=>{
-        const col = x.getAttribute('data-col');
-        grid.classList.toggle('col-focus');
-        grid.querySelectorAll('.v').forEach(v=>{
-          v.style.filter = (v.getAttribute('data-col')===col) ? 'saturate(1.5) contrast(1.1)' : '';
+    // click to focus a column
+    head.querySelectorAll('.x').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const col = el.getAttribute('data-col');
+        if (grid.dataset.focus && grid.dataset.focus === col) {
+          delete grid.dataset.focus;
+          // unset focus marker
+          head.querySelectorAll('.x').forEach(x=>x.removeAttribute('data-col-focus'));
+        } else {
+          grid.dataset.focus = col;
+          head.querySelectorAll('.x').forEach(x=>x.removeAttribute('data-col-focus'));
+          el.setAttribute('data-col-focus','');
+        }
+        // mark focused cells
+        body.querySelectorAll('.cell[data-col]').forEach(c=>{
+          c.setAttribute('data-col', c.getAttribute('data-col').replace('F',''));
+          if (c.getAttribute('data-col') === col) c.setAttribute('data-col','F');
+        });
+        head.querySelectorAll('.x').forEach(c=>{
+          c.setAttribute('data-col', c.getAttribute('data-col').replace('F',''));
+          if (c.getAttribute('data-col') === col) c.setAttribute('data-col','F');
         });
       });
     });
+
+    autoTighten();
   }
 
-  // Toggle
-  const tabs = document.querySelectorAll('.mode-toggle [role="tab"]');
-  function setMode(m){
-    tabs.forEach(b=>b.setAttribute('aria-selected', String(b.dataset.mode===m)));
-    if(m==='biz') render(HM_ROWS_BIZ, MATRIX_BIZ);
-    else render(HM_ROWS_DATA, MATRIX_DATA);
+  // auto-compact if the grid overflows horizontally
+  function autoTighten(){
+    grid.classList.remove('tight');
+    requestAnimationFrame(()=>{
+      if (grid.scrollWidth > grid.clientWidth) grid.classList.add('tight');
+    });
   }
-  tabs.forEach(b=>b.addEventListener('click',()=> setMode(b.dataset.mode)));
+  window.addEventListener('resize', autoTighten);
+
+  // tabs
+  function setMode(m){
+    if (m === 'data'){
+      tabData.classList.add('on'); tabBiz.classList.remove('on');
+      render(ROWS, MAT_DATA);
+    } else {
+      tabBiz.classList.add('on'); tabData.classList.remove('on');
+      render(ROWS, MAT_BIZ);
+    }
+  }
+  tabData.addEventListener('click', ()=>setMode('data'));
+  tabBiz .addEventListener('click', ()=>setMode('biz'));
+
+  // init
   setMode('data');
 })();
 </script>
+<!-- ===== /Stack Heatmap ===== -->
 
 
 
