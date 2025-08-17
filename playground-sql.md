@@ -183,6 +183,18 @@ id,date,city,seg,chan,mem,stat,km,prom,act,net,fee,tip,tot
 </textarea>
 <button id="load">Load CSV as table 'data'</button>
 
+<!-- One-click query gallery -->
+<label>Query gallery: 
+<select id="qPick">
+  <option value="">— choose —</option>
+  <option value="SELECT mem, ROUND(AVG(fee),2) avg_fee, ROUND(AVG(tip),2) avg_tip, COUNT(*) orders FROM data WHERE stat='deliv' GROUP BY mem;">Member vs non-member</option>
+  <option value="SELECT city, COUNT(*) orders, SUM(tot) revenue FROM data WHERE stat='deliv' GROUP BY city ORDER BY revenue DESC;">City revenue</option>
+  <option value="SELECT seg, ROUND(AVG(act-prom),2) avg_delay FROM data WHERE stat='deliv' GROUP BY seg ORDER BY avg_delay DESC;">ETA delta by segment</option>
+</select></label>
+<script>
+document.getElementById('qPick').onchange=function(){ if(this.value){ document.getElementById('sql').value=this.value; } };
+</script>
+
 <textarea id="sql" rows="6" style="width:100%;max-width:760px;margin-top:10px">--Member vs non-member: fee & tip (delivered)
 SELECT mem,
   ROUND(AVG(fee),2) AS avg_fee,
