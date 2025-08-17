@@ -14,7 +14,6 @@ permalink: /labs/kmeans/
 
 <canvas id="km" width="720" height="440" style="border:1px solid #e5e7eb;border-radius:10px"></canvas>
 
-<!-- Share controls (outside toolbar) -->
 <div class="share-row" style="margin-top:10px">
   <button id="shareLink"  class="km-btn">Share setup</button>
   <button id="resetState" class="km-btn">Reset parameters</button>
@@ -23,16 +22,53 @@ permalink: /labs/kmeans/
 <style>
 .km-toolbar{display:flex;gap:8px;margin-bottom:8px;align-items:center}
 .km-toolbar input[type=range]{vertical-align:middle}
-
-/* buttons: both toolbar + share row */
 .km-btn{padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer}
 .km-btn:hover{background:#f8fafc}
 html[data-theme="dark"] #km{border-color:#1f2937}
 html[data-theme="dark"] .km-btn{background:#0f172a;border-color:#1f2937;color:#e8eef7}
 </style>
 
-
-<script src="/assets/js/share-state.js"></script>
+<!-- Inline StateShare fallback so buttons always work -->
+<script>
+window.StateShare = window.StateShare || (function(){
+  function _parse(){
+    const p = new URLSearchParams(location.search);
+    const k = p.get('k'); const pts = p.get('pts');
+    return {
+      k: k ? (+k||3) : undefined,
+      pts: pts ? pts.split(';')
+                 .map(s=>s.split(',').map(Number))
+                 .filter(a=>a.length===2 && a.every(n=>Number.isFinite(n))) : undefined
+    };
+  }
+  function load(defaults){
+    const s = _parse();
+    return {
+      k: (s.k ?? defaults.k),
+      pts: (s.pts ?? defaults.pts)
+    };
+  }
+  function save({k, pts}){
+    const p = new URLSearchParams(location.search);
+    if (k != null) p.set('k', k);
+    if (Array.isArray(pts))
+      p.set('pts', pts.map(([x,y])=>`${Math.round(x)},${Math.round(y)}`).join(';'));
+    const url = location.pathname + '?' + p.toString() + location.hash;
+    history.replaceState(null, '', url);
+  }
+  async function copyLink(btn){
+    try{
+      await navigator.clipboard.writeText(location.href);
+      const old = btn.textContent; btn.textContent='Copied!'; setTimeout(()=>btn.textContent=old, 1200);
+    }catch(_){ alert(location.href); }
+  }
+  function reset(){
+    history.replaceState(null,'', location.pathname);
+    location.reload();
+  }
+  return { load, save, copyLink, reset };
+})();
+</script>
 
 <script>
 (function(){
@@ -41,10 +77,10 @@ html[data-theme="dark"] .km-btn{background:#0f172a;border-color:#1f2937;color:#e
   const col=['#2563eb','#16a34a','#f59e0b','#ef4444','#a855f7','#06b6d4'];
 
   // Load sharable state (query string), fallback to defaults
-  const defaults = { k:3, pts:[] };      // pts format: [[x,y], ...]
-  const shared   = (window.StateShare ? StateShare.load(defaults) : defaults);
+  const defaults = { k:3, pts:[] };
+  const shared   = StateShare.load(defaults);
 
-  let P=[], C=[], K = shared.k ?? 3;     // points, centroids, K
+  let P=[], C=[], K = shared.k ?? 3;
   let dragging=null, auto=null;
 
   // DOM
@@ -53,14 +89,10 @@ html[data-theme="dark"] .km-btn{background:#0f172a;border-color:#1f2937;color:#e
   const stepB = document.getElementById('step');
   const autoB = document.getElementById('auto');
 
-  // Initialize slider from state
   kval.value = K;
 
   function toArrayPoints(){ return P.map(p=>[Math.round(p.x), Math.round(p.y)]); }
-  function persist(){
-    if (!window.StateShare) return;
-    StateShare.save({ k:K, pts: toArrayPoints() });
-  }
+  function persist(){ StateShare.save({ k:K, pts: toArrayPoints() }); }
 
   function assign(){
     P.forEach(p=>{
@@ -98,7 +130,6 @@ html[data-theme="dark"] .km-btn{background:#0f172a;border-color:#1f2937;color:#e
   }
 
   function initFromState(){
-    // If we have shared points, use them; otherwise random
     if (Array.isArray(shared.pts) && shared.pts.length){
       P = shared.pts.map(([x,y])=>({x:Math.max(2,Math.min(W-2, +x||0)),
                                     y:Math.max(2,Math.min(H-2, +y||0)),
@@ -110,7 +141,7 @@ html[data-theme="dark"] .km-btn{background:#0f172a;border-color:#1f2937;color:#e
     }
   }
 
-  // ====== Interactions ======
+  // Interactions: drag points / click to add
   c.onmousedown=e=>{
     const r=c.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
     const hit=P.find(p=> (p.x-x)**2+(p.y-y)**2 < 7**2 );
@@ -140,17 +171,11 @@ html[data-theme="dark"] .km-btn{background:#0f172a;border-color:#1f2937;color:#e
     else { auto=setInterval(step,400); e.target.textContent='Auto ❚❚'; }
   };
 
-  // Share buttons (attach AFTER DOM exists)
-  document.getElementById('shareLink').onclick  = (ev)=>{ if(window.StateShare) StateShare.copyLink(ev.target); };
-  document.getElementById('resetState').onclick = ()=>{ if(window.StateShare) StateShare.reset(); };
+  // Share buttons
+  document.getElementById('shareLink').onclick  = (ev)=> StateShare.copyLink(ev.target);
+  document.getElementById('resetState').onclick = ()=>  StateShare.reset();
 
   // Go!
   initFromState();
 })();
 </script>
-
-
-
-
-
-
