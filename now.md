@@ -8,10 +8,24 @@ permalink: /now/
 
 ## Time Zones
 
-<!-- top of now.md -->
-<p><strong>Open to:</strong> <span class="chip">Paris</span> <span class="chip">Berlin</span> <span class="chip">London</span> …</p>
-<p><strong>Local time:</strong> <span id="clock"></span></p>
-<script>setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString()},1000);</script>
+<h3>Local time</h3>
+<div class="tz-toolbar" id="exp-tz" data-default-tz="Europe/Paris">
+  <!-- Add/remove cities as you like -->
+  <button class="tz-chip" data-tz="Europe/Paris">Paris</button>
+  <button class="tz-chip" data-tz="Europe/Berlin">Berlin</button>
+  <button class="tz-chip" data-tz="Europe/Berlin">Munich</button>
+  <button class="tz-chip" data-tz="Europe/London">London</button>
+  <button class="tz-chip" data-tz="Europe/Amsterdam">Amsterdam</button>
+  <button class="tz-chip" data-tz="Europe/Dublin">Dublin</button>
+  <button class="tz-chip" data-tz="America/New_York">New York</button>
+  <button class="tz-chip" data-tz="Asia/Singapore">Singapore</button>
+</div>
+
+<div class="tz-clock" id="exp-clock" aria-live="polite">
+  <span class="big">--:--:--</span>
+  <span class="sub"> </span>
+</div>
+
 
 ## Updates
 
