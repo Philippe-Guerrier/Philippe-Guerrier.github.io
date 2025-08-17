@@ -45,9 +45,9 @@ _Last updated: 2025-08-17_
 **Web/General**: HTML/CSS/JS, Markdown, VS Code.
 
 ## Representative projects (what these tools power)
-- **PulseFlow AI** — offline music identifier & recommender using CLAP embeddings + FAISS; smooth transitions; fully on-device.
-- **Scrape-LLM (local)** — lightweight scraper + local LLM/vision (Ollama/HF) for concise page summaries & image sampling.
-- **Real-Time Market Sentiment Dashboard** — streaming news/Reddit pipeline with parallel sentiment and auto write-ups.
+- **PulseFlow AI** - offline music identifier & recommender using CLAP embeddings + FAISS; smooth transitions; fully on-device.
+- **Scrape-LLM (local)** - lightweight scraper + local LLM/vision (Ollama/HF) for concise page summaries & image sampling.
+- **Real-Time Market Sentiment Dashboard** - streaming news/Reddit pipeline with parallel sentiment and auto write-ups.
 
 ## Profiles & links
 - **Portfolio (Google Sites)**: https://sites.google.com/view/philippeguerrier/
