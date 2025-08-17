@@ -45,6 +45,7 @@ _Last updated: 2025‑08‑14_
   <button class="tz-chip" data-tz="Europe/London">Edinburgh</button>
   <button class="tz-chip" data-tz="Australia/Melbourne">Melbourne</button>
   <button class="tz-chip" data-tz="Europe/Vienna">Vienna</button>
+  <button class="tz-chip" data-tz="Europe/Copenhagen">Copenhagen</button>
 </div>
 
 <div class="tz-clock" id="now-clock" aria-live="polite">
@@ -106,7 +107,8 @@ _Last updated: 2025‑08‑14_
     { name:'Toronto, Canada',          lat:43.6532,  lng:-79.3832, mode:'Hybrid' },
     { name:'Edinburgh, UK',            lat:55.9533,  lng:-3.1883,  mode:'Hybrid' },
     { name:'Melbourne, Australia',     lat:-37.8136, lng:144.9631, mode:'Hybrid' },
-    { name:'Vienna, Austria',          lat:48.2082,  lng:16.3738,  mode:'Hybrid' }
+    { name:'Vienna, Austria',          lat:48.2082,  lng:16.3738,  mode:'Hybrid' },
+    { name:'Copenhagen, Denmark',      lat:55.6761,  lng:12.5683,  mode:'Hybrid' }
   ];
 
 
