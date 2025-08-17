@@ -15,7 +15,7 @@ _Last updated: 2025‑08‑14_
 - Reading/experimenting: ML systems, AI in medicine, and quantum/optimization.
 
 
-## Open to work — preferred cities
+## Open to work - preferred cities
 
 <div class="map-wrap">
   <div id="open-map" class="map"></div>
@@ -41,14 +41,35 @@ _Last updated: 2025‑08‑14_
     { name:'Paris, France',   lat:48.8566, lng:2.3522, info:'Deezer · Uber · Poke Break · Streamglish' },
     { name:'Munich, Germany', lat:48.1351, lng:11.5820, info:'Amazon Business' }
   ];
+  // Replace your current openTo array with this:
   const openTo = [
-    { name:'Paris, France',   lat:48.8566, lng:2.3522 },
-    { name:'London, UK',      lat:51.5072, lng:-0.1276 },
-    { name:'Berlin, Germany', lat:52.52,   lng:13.405 },
-    { name:'Munich, Germany', lat:48.1351, lng:11.5820 },
-    { name:'Amsterdam, NL',   lat:52.3676, lng:4.9041 },
-    { name:'Zurich, CH',      lat:47.3769, lng:8.5417 }
+    { name:'Paris, France',            lat:48.8566,  lng:2.3522,   mode:'Hybrid' },
+    { name:'Berlin, Germany',          lat:52.5200,  lng:13.4050,  mode:'Hybrid' },
+    { name:'Munich, Germany',          lat:48.1351,  lng:11.5820,  mode:'Hybrid' },
+    { name:'London, UK',               lat:51.5072,  lng:-0.1276,  mode:'Hybrid' },
+    { name:'Amsterdam, Netherlands',   lat:52.3676,  lng:4.9041,   mode:'Hybrid' },
+    { name:'Dublin, Ireland',          lat:53.3498,  lng:-6.2603,  mode:'Hybrid' },
+    { name:'Miami, Florida, USA',      lat:25.7617,  lng:-80.1918, mode:'Hybrid' },
+    { name:'West Palm Beach, FL, USA', lat:26.7153,  lng:-80.0534, mode:'Hybrid' },
+    { name:'Frankfurt, Germany',       lat:50.1109,  lng:8.6821,   mode:'Hybrid' },
+    { name:'New York, USA',            lat:40.7128,  lng:-74.0060, mode:'Hybrid' },
+    { name:'Hamburg, Germany',         lat:53.5511,  lng:9.9937,   mode:'Hybrid' },
+    { name:'Shenzhen, China',          lat:22.5431,  lng:114.0579, mode:'Hybrid' },
+    { name:'Singapore',                lat:1.3521,   lng:103.8198, mode:'Hybrid' },
+    { name:'Hong Kong',                lat:22.3193,  lng:114.1694, mode:'Hybrid' },
+    { name:'Stockholm, Sweden',        lat:59.3293,  lng:18.0686,  mode:'Hybrid' },
+    { name:'Oslo, Norway',             lat:59.9139,  lng:10.7522,  mode:'Hybrid' },
+    { name:'Rotterdam, Netherlands',   lat:51.9244,  lng:4.4777,   mode:'Hybrid' },
+    { name:'Cologne, Germany',         lat:50.9375,  lng:6.9603,   mode:'Hybrid' },
+    { name:'Zurich, Switzerland',      lat:47.3769,  lng:8.5417,   mode:'Hybrid' },
+    { name:'Beijing, China',           lat:39.9042,  lng:116.4074, mode:'Hybrid' },
+    { name:'Hauts-de-Seine, France',   lat:48.8280,  lng:2.2180,   mode:'Hybrid' }, // dept. west of Paris
+    { name:'Toronto, Canada',          lat:43.6532,  lng:-79.3832, mode:'Hybrid' },
+    { name:'Edinburgh, UK',            lat:55.9533,  lng:-3.1883,  mode:'Hybrid' },
+    { name:'Melbourne, Australia',     lat:-37.8136, lng:144.9631, mode:'Hybrid' },
+    { name:'Vienna, Austria',          lat:48.2082,  lng:16.3738,  mode:'Hybrid' }
   ];
+
 
   const map = L.map('open-map', {
     zoomControl: true,
