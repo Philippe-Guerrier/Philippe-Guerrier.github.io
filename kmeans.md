@@ -13,8 +13,6 @@ permalink: /labs/kmeans/
 </div>
 <canvas id="km" width="720" height="440" style="border:1px solid #e5e7eb;border-radius:10px"></canvas>
 
-<button id="shareLink">Share setup</button>
-<button id="resetState">Reset parameters</button>
 
 <style>
 .km-toolbar{display:flex;gap:8px;margin-bottom:8px}
@@ -39,6 +37,8 @@ document.getElementById('shareLink').onclick = e => StateShare.copyLink(e.target
 document.getElementById('resetState').onclick = () => StateShare.reset();
 </script>
 
+<button id="shareLink">Share setup</button>
+<button id="resetState">Reset parameters</button>
 
 <script>
 (function(){
