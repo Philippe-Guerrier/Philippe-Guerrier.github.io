@@ -7,21 +7,43 @@ permalink: /experience/
 [Home](/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
 
-## Deezer - Data Analyst (Intern) · Apr 2025–Sep 2025  · Paris (Hybrid)
-SQL • Python • Airflow • Dashboards • Product/Ops analytics.
 
-## Uber - Data Analytics, Logistics & Operations (Intern) · Oct 2023–Mar 2024 · Paris (Hybrid)
-Built analyses in SQL/Python; regression/ML/optimization to support ops decisions and improve driver/customer experience.
+### Deezer — Data Analyst (Intern)  
+**Apr 2025 – Sep 2025 · Paris (Hybrid)**  
+- SQL, Python, Airflow  
+- Dashboard development  
+- Product & Operations analytics  
 
-## Amazon Business - Demand Generation & BI (Intern) · Jun–Aug 2023 · Munich (Hybrid)
-Automated DG reporting via online dashboard; client insights; cross‑team collaboration (EU/US).
+---
 
-## Poke Break - Data Scientist (Contract) · Mar–Jun 2023 · Paris
-Cost reduction, benefit growth, and customer satisfaction improvements via predictive analytics and process optimization.
+### Uber — Data Analytics, Logistics & Operations (Intern)  
+**Oct 2023 – Mar 2024 · Paris (Hybrid)**  
+- Built analyses in SQL/Python  
+- Applied regression, ML, and optimization to support operations  
+- Improved driver and customer experience through data-driven insights  
 
-### Volunteering
-- Dau’IA (Dauphine‑PSL) - AI events & talks department (2024–2025)
-- Sorbonne Competitive Intelligence & Strategy - Business network & conferences (2022–2023)
+---
+
+### Amazon Business — Demand Generation & BI (Intern)  
+**Jun 2023 – Aug 2023 · Munich (Hybrid)**  
+- Automated DG reporting via online dashboard  
+- Produced client insights for EU/US teams  
+- Cross-team collaboration across international markets  
+
+---
+
+### Poke Break — Data Scientist (Contract)  
+**Mar 2023 – Jun 2023 · Paris**  
+- Reduced costs and increased benefits via predictive analytics  
+- Improved customer satisfaction with process optimization  
+
+---
+
+# Volunteering
+
+- **Dau’IA (Dauphine-PSL)** — AI Events & Talks Department (2024–2025)  
+- **Sorbonne Competitive Intelligence & Strategy** — Business Network & Conferences (2022–2023)  
+
 
 
 ## Time Zone
