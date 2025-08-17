@@ -30,35 +30,36 @@ html[data-theme="dark"] .km-toolbar button{background:#0f172a;border-color:#1f29
 <script src="/assets/js/share-state.js"></script>
 
 <script>
-// 1) Load initial state (defaults if no query present)
-const state = StateShare.load({ k:3, pts:[] }); // pts = [[x,y], ...]
-
-// TODO: initialize your UI from state.k and state.pts here
-// e.g., set k slider/input, draw existing points
-
-// 2) Whenever k or points change, call:
-function persist(){ StateShare.save({ k: currentK, pts: currentPointsArray }); }
-
-// 3) Wire buttons
-document.getElementById('shareLink').onclick = e => StateShare.copyLink(e.target);
-document.getElementById('resetState').onclick = () => StateShare.reset();
-</script>
-
-<script>
 (function(){
+  // ====== State & canvas setup ======
   const W=720,H=440,c=document.getElementById('km'),g=c.getContext('2d');
   const col=['#2563eb','#16a34a','#f59e0b','#ef4444','#a855f7','#06b6d4'];
-  let P=[], C=[], K=3, dragging=null, auto=null;
 
-  function rand(n){ return Math.random()*n|0; }
-  function init(n=140){
-    P=[...Array(n)].map(()=>({x:20+Math.random()*(W-40), y:20+Math.random()*(H-40), k:0}));
-    C=[...Array(K)].map((_,i)=>({x:W*(i+1)/(K+1), y:H*(i+1)/(K+1)}));
-    assign(); draw();
+  // Load sharable state (query string), fallback to defaults
+  const defaults = { k:3, pts:[] };      // pts format: [[x,y], ...]
+  const shared   = (window.StateShare ? StateShare.load(defaults) : defaults);
+
+  let P=[], C=[], K = shared.k ?? 3;     // points, centroids, K
+  let dragging=null, auto=null;
+
+  // DOM
+  const kval  = document.getElementById('kval');
+  const reset = document.getElementById('reset');
+  const stepB = document.getElementById('step');
+  const autoB = document.getElementById('auto');
+
+  // Initialize slider from state
+  kval.value = K;
+
+  function toArrayPoints(){ return P.map(p=>[Math.round(p.x), Math.round(p.y)]); }
+  function persist(){
+    if (!window.StateShare) return;
+    StateShare.save({ k:K, pts: toArrayPoints() });
   }
+
   function assign(){
     P.forEach(p=>{
-      let best=0,b=1e9;
+      let best=0,b=Infinity;
       for(let k=0;k<K;k++){
         const dx=p.x-C[k].x, dy=p.y-C[k].y, d=dx*dx+dy*dy;
         if(d<b){b=d;best=k;}
@@ -66,44 +67,80 @@ document.getElementById('resetState').onclick = () => StateShare.reset();
       p.k=best;
     });
   }
+
   function update(){
     for(let k=0;k<K;k++){
       const S=P.filter(p=>p.k===k);
-      if(S.length){ C[k].x=S.reduce((s,p)=>s+p.x,0)/S.length; C[k].y=S.reduce((s,p)=>s+p.y,0)/S.length; }
+      if(S.length){
+        C[k].x=S.reduce((s,p)=>s+p.x,0)/S.length;
+        C[k].y=S.reduce((s,p)=>s+p.y,0)/S.length;
+      }
     }
   }
+
   function step(){ assign(); update(); draw(); }
+
   function draw(){
     g.clearRect(0,0,W,H);
-    P.forEach(p=>{ g.fillStyle=col[p.k]; g.beginPath(); g.arc(p.x,p.y,3,0,6.283); g.fill(); });
-    for(let k=0;k<K;k++){ g.strokeStyle=col[k]; g.lineWidth=3; g.strokeRect(C[k].x-6,C[k].y-6,12,12); }
+    P.forEach(p=>{ g.fillStyle=col[p.k%col.length]; g.beginPath(); g.arc(p.x,p.y,3,0,Math.PI*2); g.fill(); });
+    for(let k=0;k<K;k++){ g.strokeStyle=col[k%col.length]; g.lineWidth=3; g.strokeRect(C[k].x-6,C[k].y-6,12,12); }
   }
 
-  // Interactions: drag points, click to add
+  function initRandom(n=140){
+    P=[...Array(n)].map(()=>({x:20+Math.random()*(W-40), y:20+Math.random()*(H-40), k:0}));
+    C=[...Array(K)].map((_,i)=>({x:W*(i+1)/(K+1), y:H*(i+1)/(K+1)}));
+    step(); persist();
+  }
+
+  function initFromState(){
+    // If we have shared points, use them; otherwise random
+    if (Array.isArray(shared.pts) && shared.pts.length){
+      P = shared.pts.map(([x,y])=>({x:Math.max(2,Math.min(W-2, +x||0)),
+                                    y:Math.max(2,Math.min(H-2, +y||0)),
+                                    k:0}));
+      C=[...Array(K)].map((_,i)=>({x:W*(i+1)/(K+1), y:H*(i+1)/(K+1)}));
+      step();
+    } else {
+      initRandom();
+    }
+  }
+
+  // ====== Interactions ======
   c.onmousedown=e=>{
     const r=c.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
     const hit=P.find(p=> (p.x-x)**2+(p.y-y)**2 < 7**2 );
     if(hit){ dragging=hit; }
-    else { P.push({x,y,k:0}); step(); }
+    else { P.push({x,y,k:0}); step(); persist(); }
   };
   c.onmousemove=e=>{
     if(!dragging) return;
-    const r=c.getBoundingClientRect(); dragging.x=e.clientX-r.left; dragging.y=e.clientY-r.top; step();
+    const r=c.getBoundingClientRect();
+    dragging.x=Math.max(2,Math.min(W-2, e.clientX-r.left));
+    dragging.y=Math.max(2,Math.min(H-2, e.clientY-r.top));
+    step();
   };
-  c.onmouseup=()=> dragging=null; c.onmouseleave=()=> dragging=null;
+  c.onmouseup=()=>{ if(dragging){ dragging=null; persist(); } };
+  c.onmouseleave=()=>{ if(dragging){ dragging=null; persist(); } };
 
   // Controls
-  document.getElementById('kval').oninput=e=>{
-    K=+e.target.value; C=[...Array(K)].map((_,i)=>({x:W*(i+1)/(K+1),y:H*(i+1)/(K+1)})); step();
+  kval.oninput=e=>{
+    K=+e.target.value;
+    C=[...Array(K)].map((_,i)=>({x:W*(i+1)/(K+1),y:H*(i+1)/(K+1)}));
+    step(); persist();
   };
-  document.getElementById('reset').onclick=()=>init();
-  document.getElementById('step').onclick=step;
-  document.getElementById('auto').onclick=e=>{
+  reset.onclick = ()=>{ initRandom(); };
+  stepB.onclick  = step;
+  autoB.onclick  = e=>{
     if(auto){ clearInterval(auto); auto=null; e.target.textContent='Auto ▷'; }
     else { auto=setInterval(step,400); e.target.textContent='Auto ❚❚'; }
   };
 
-  init();
+  // Share buttons (attach AFTER DOM exists)
+  document.getElementById('shareLink').onclick  = (ev)=>{ if(window.StateShare) StateShare.copyLink(ev.target); };
+  document.getElementById('resetState').onclick = ()=>{ if(window.StateShare) StateShare.reset(); };
+
+  // Go!
+  initFromState();
 })();
 </script>
 
