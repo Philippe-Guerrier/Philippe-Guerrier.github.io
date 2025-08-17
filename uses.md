@@ -217,16 +217,16 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 
   // --- tools (short + full for responsive headers) ---
   const HM_TOOLS = [
-    { short:'Py',    full:'Python' },
+    { short:'Python',    full:'Python' },
     { short:'SQL',   full:'SQL' },
-    { short:'Flow',  full:'Airflow' },
+    { short:'Airflow',  full:'Airflow' },
     { short:'Spark', full:'Spark' },
     { short:'ML',    full:'ML (TF/PT)' },
     { short:'FAISS', full:'FAISS' },
     { short:'BI',    full:'Tableau/BI' },
     { short:'dbt',   full:'dbt' },
-    { short:'Qsk',   full:'Qiskit' },
-    { short:'Oll',   full:'Ollama' }
+    { short:'Qiskit',   full:'Qiskit' },
+    { short:'Ollama',   full:'Ollama' }
   ];
 
   const ROWS = [
