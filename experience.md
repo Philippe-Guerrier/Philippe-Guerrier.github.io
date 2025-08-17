@@ -24,6 +24,26 @@ Cost reduction, benefit growth, and customer satisfaction improvements via predi
 - Sorbonne Competitive Intelligence & Strategy - Business network & conferences (2022–2023)
 
 
+## Time Zone
+
+<h3>Local time</h3>
+<div class="tz-toolbar" id="exp-tz" data-default-tz="Europe/Paris">
+  <!-- Add/remove cities as you like -->
+  <button class="tz-chip" data-tz="Europe/Paris">Paris</button>
+  <button class="tz-chip" data-tz="Europe/Berlin">Berlin</button>
+  <button class="tz-chip" data-tz="Europe/Berlin">Munich</button>
+  <button class="tz-chip" data-tz="Europe/London">London</button>
+  <button class="tz-chip" data-tz="Europe/Amsterdam">Amsterdam</button>
+  <button class="tz-chip" data-tz="Europe/Dublin">Dublin</button>
+  <button class="tz-chip" data-tz="America/New_York">New York</button>
+  <button class="tz-chip" data-tz="Asia/Singapore">Singapore</button>
+</div>
+
+<div class="tz-clock" id="exp-clock" aria-live="polite">
+  <span class="big">--:--:--</span>
+  <span class="sub"> </span>
+</div>
+
 
 ## Where I’ve worked (map)
 
@@ -91,5 +111,104 @@ Cost reduction, benefit growth, and customer satisfaction improvements via predi
   setTimeout(fix, 350);
 })();
 </script>
+
+
+<style>
+.tz-toolbar{
+  display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 6px;
+  --bd:#e5e7eb; --bg:#fff; --tx:#0b1220; --accent:#2563eb; --hover:#f8fafc;
+}
+.tz-chip{
+  border:1px solid var(--bd); background:var(--bg); color:var(--tx);
+  padding:6px 10px; border-radius:999px; cursor:pointer; font-size:.95rem;
+}
+.tz-chip:hover{ background:var(--hover); }
+.tz-chip[aria-pressed="true"]{ background:var(--accent); color:#fff; border-color:var(--accent); }
+.tz-clock{ display:flex; gap:10px; align-items:baseline; font-feature-settings:"tnum" 1; }
+.tz-clock .big{ font-size:1.6rem; font-weight:700; letter-spacing:.02em; }
+.tz-clock .sub{ opacity:.8; }
+
+html[data-theme="dark"] .tz-toolbar{
+  --bd:#1f2937; --bg:#0f172a; --tx:#e8eef7; --accent:#60a5fa; --hover:#111827;
+}
+</style>
+
+
+<script>
+(function(){
+  // Formatters per time zone (caches for performance)
+  const formatters = {};
+  function fmt(tz){
+    if(!formatters[tz]){
+      formatters[tz] = {
+        time: new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false }),
+        date: new Intl.DateTimeFormat('en-GB', { timeZone: tz, weekday:'short', day:'2-digit', month:'short' }),
+        tzn:  new Intl.DateTimeFormat('en-GB', { timeZone: tz, timeZoneName:'short' })
+      };
+    }
+    return formatters[tz];
+  }
+
+  function wireTzToolbar(toolbarId, clockId){
+    const bar = document.getElementById(toolbarId);
+    const clock = document.getElementById(clockId);
+    if(!bar || !clock) return;
+
+    const chips = Array.from(bar.querySelectorAll('.tz-chip'));
+    const big = clock.querySelector('.big');
+    const sub = clock.querySelector('.sub');
+    const storeKey = 'tz:' + toolbarId;
+
+    let activeTz = localStorage.getItem(storeKey) || bar.getAttribute('data-default-tz') || (chips[0]?.dataset.tz);
+    let tickHandle = null;
+
+    function setActiveByTz(tz){
+      activeTz = tz;
+      localStorage.setItem(storeKey, tz);
+      chips.forEach(ch => ch.setAttribute('aria-pressed', ch.dataset.tz === tz ? 'true' : 'false'));
+      bar.dispatchEvent(new CustomEvent('tz:change', { detail: { timeZone: tz }}));
+      restartTick();
+    }
+
+    function render(){
+      try{
+        const now = new Date();
+        const f = fmt(activeTz);
+        big.textContent = f.time.format(now);
+        // Use the timezone name from a second format (it includes it); extract the tail
+        const tzn = f.tzn.formatToParts(now).find(p => p.type === 'timeZoneName')?.value || '';
+        sub.textContent = `${f.date.format(now)} • ${tzn}`;
+      }catch(e){
+        big.textContent = '--:--:--';
+        sub.textContent = activeTz;
+      }
+    }
+
+    function restartTick(){
+      if(tickHandle) clearInterval(tickHandle);
+      render();
+      tickHandle = setInterval(render, 1000);
+    }
+
+    // Click behavior
+    bar.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.tz-chip');
+      if(!btn) return;
+      e.preventDefault();
+      setActiveByTz(btn.dataset.tz);
+    });
+
+    // Initial state
+    chips.forEach(ch => ch.setAttribute('aria-pressed', 'false'));
+    if (activeTz) setActiveByTz(activeTz);
+    else if (chips[0]) setActiveByTz(chips[0].dataset.tz);
+  }
+
+  // Wire the sections you have on this page:
+  wireTzToolbar('exp-tz', 'exp-clock'); // Experience
+  wireTzToolbar('now-tz', 'now-clock'); // Now
+})();
+</script>
+
 
 
