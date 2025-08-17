@@ -113,7 +113,7 @@ const SPOTLIGHT = [
 <!-- ===== /Spotlight 2.0 ===== -->
 
 
-<!-- ===== Stack Heatmap (responsive, compact fix) ===== -->
+<!-- ===== Stack Heatmap (angled headers + wider text zone) ===== -->
 <section class="hm">
   <h2>Stack Heatmap</h2>
   <p class="hm-sub">How my tooling shows up across two “modes” of work.</p>
@@ -138,7 +138,7 @@ const SPOTLIGHT = [
 
 <style>
 /* ---- layout / theme vars ---- */
-.hm { --cell: 42px; --gap: 8px; --bd:#e5e7eb; --tx:#0b1220; --muted:#6b7280; --accent:#2563eb; }
+.hm { --cell: 42px; --gap: 8px; --ycol: 230px; --bd:#e5e7eb; --tx:#0b1220; --muted:#6b7280; --accent:#2563eb; }
 html[data-theme="dark"] .hm { --bd:#1f2937; --tx:#e8eef7; --muted:#9aa4b5; --accent:#60a5fa; }
 
 .hm h2 { margin-bottom:.25rem }
@@ -156,7 +156,7 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
   overflow:auto; border:1px solid var(--bd); border-radius:12px; padding:10px; 
   background:transparent;
 }
-.hm-grid .row{ display:grid; gap:var(--gap); grid-template-columns: 200px repeat(var(--cols), var(--cell)); align-items:center; }
+.hm-grid .row{ display:grid; gap:var(--gap); grid-template-columns: var(--ycol) repeat(var(--cols), var(--cell)); align-items:center; }
 .hm-grid .row + .row{ margin-top:var(--gap) }
 
 .hm-grid .cell{
@@ -171,12 +171,26 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 .hm-grid .x{
   font-weight:600; border:none; background:transparent; width:var(--cell);
   display:flex; align-items:center; justify-content:center; text-align:center;
-  overflow:hidden; text-overflow:ellipsis; /* prevent spill before tight mode kicks in */
+  overflow:hidden; text-overflow:ellipsis;
 }
 .hm-grid .x .short{ display:none; }
 .hm-grid .x .full{ display:block; }
 
-/* compact mode when space is tight */
+/* ---------- ANGLED MODE (fits more without going vertical) ---------- */
+.hm-grid.angled { --cell: 36px; }
+.hm-grid.angled .row.head{ align-items:end; }
+.hm-grid.angled .x{ height: calc(var(--cell) + 28px); }
+.hm-grid.angled .x .full{
+  display:block;
+  transform: rotate(-32deg);
+  transform-origin: left bottom;
+  white-space:nowrap;
+  line-height:1;
+  translate: 0 6px;   /* nudge down to sit on baseline */
+}
+.hm-grid.angled .x .short{ display:none; }
+
+/* ---------- TIGHT MODE (true compact vertical) ---------- */
 .hm-grid.tight { --cell:34px; }
 .hm-grid.tight .x{ 
   writing-mode:vertical-rl; transform:rotate(180deg); line-height:1;
@@ -185,12 +199,16 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 .hm-grid.tight .x .full{ display:none; }
 .hm-grid.tight .x .short{ display:block; }
 
-/* extra safety: force compact on narrower viewports */
+/* safety: if viewport is small, prefer at least angled */
 @media (max-width: 1200px){
-  .hm-grid{ --cell:34px; }
-  .hm-grid .x{ writing-mode:vertical-rl; transform:rotate(180deg); line-height:1; padding:6px 4px; font-size:.8rem; }
-  .hm-grid .x .full{ display:none; }
-  .hm-grid .x .short{ display:block; }
+  .hm-grid:not(.tight){ --cell:36px; }
+  .hm-grid:not(.tight) .row.head{ align-items:end; }
+  .hm-grid:not(.tight) .x{ height: calc(var(--cell) + 28px); }
+  .hm-grid:not(.tight) .x .full{
+    transform: rotate(-32deg);
+    transform-origin: left bottom;
+    white-space:nowrap; line-height:1; translate: 0 6px;
+  }
 }
 
 /* column focus */
@@ -217,16 +235,16 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 
   // --- tools (short + full for responsive headers) ---
   const HM_TOOLS = [
-    { short:'Python',    full:'Python' },
+    { short:'Py',    full:'Python' },
     { short:'SQL',   full:'SQL' },
-    { short:'Airflow',  full:'Airflow' },
+    { short:'Flow',  full:'Airflow' },
     { short:'Spark', full:'Spark' },
     { short:'ML',    full:'ML (TF/PT)' },
     { short:'FAISS', full:'FAISS' },
     { short:'BI',    full:'Tableau/BI' },
     { short:'dbt',   full:'dbt' },
-    { short:'Qiskit',   full:'Qiskit' },
-    { short:'Ollama',   full:'Ollama' }
+    { short:'Qsk',   full:'Qiskit' },
+    { short:'Oll',   full:'Ollama' }
   ];
 
   const ROWS = [
@@ -300,24 +318,33 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
       });
     });
 
-    autoTighten();
+    fitHeaders();
   }
 
-  // robust compact detection + safety hooks
-  function autoTighten(){
-    grid.classList.remove('tight');
+  // Decide between: normal → angled → tight
+  function fitHeaders(){
+    grid.classList.remove('angled','tight');
+
     requestAnimationFrame(()=>{
-      const overGrid = grid.scrollWidth - grid.clientWidth > 2;
-      const overHead = head.scrollWidth - grid.clientWidth > 2;
-      if (overGrid || overHead) grid.classList.add('tight');
+      const over = grid.scrollWidth - grid.clientWidth;
+      if (over <= 2) return;                // fits → normal
+      if (over <= 160) {                    // a bit of overflow → angled
+        grid.classList.add('angled');
+        // If still overflowing after angle, fall back to tight
+        requestAnimationFrame(()=>{
+          if (grid.scrollWidth - grid.clientWidth > 2) {
+            grid.classList.remove('angled');
+            grid.classList.add('tight');
+          }
+        });
+      } else {
+        grid.classList.add('tight');        // large overflow → vertical
+      }
     });
   }
-  window.addEventListener('resize', autoTighten);
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(autoTighten);
-  } else {
-    setTimeout(autoTighten, 0);
-  }
+
+  window.addEventListener('resize', fitHeaders);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeaders);
 
   // tabs
   function setMode(m){
@@ -339,5 +366,6 @@ html[data-theme="dark"] .hm-tabs button{ background:#0f172a }
 })();
 </script>
 <!-- ===== /Stack Heatmap ===== -->
+
 
 
