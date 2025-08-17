@@ -6,7 +6,14 @@ permalink: /now/
 
 [Home](/) · [Projects](/projects/) · [Contact](/contact/) · [Full portfolio →](https://sites.google.com/view/philippeguerrier/home)
 
+## World Clocks
 
+<!-- top of now.md -->
+<p><strong>Open to:</strong> <span class="chip">Paris</span> <span class="chip">Berlin</span> <span class="chip">London</span> …</p>
+<p><strong>Local time:</strong> <span id="clock"></span></p>
+<script>setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString()},1000);</script>
+
+## Updates
 
 _Last updated: 2025‑08‑14_
 
