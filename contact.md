@@ -17,7 +17,7 @@ permalink: /contact/
 <!-- Origami envelope -->
 <section class="contact-hero">
   <h1>Don't hesitate to contact me!</h1>
-  <p>   Pick up the envelope to reveal the interesting info</p>
+  <p>Pick up the envelope to reveal the interesting info</p>
 </section>
 
 <!-- Origami envelope (centered, animated, theme-aware) -->
@@ -88,7 +88,7 @@ html[data-theme="dark"]{
 /* ===== Layout ===== */
 .contact-hero{text-align:center;margin:14px 0 8px}
 .contact-hero h1{margin:0}
-.contact-hero p{opacity:.85;margin:.25rem 0 0}
+.contact-hero p{opacity:.85;margin:.25rem 0 0; text-indent:4ch}
 
 .env-stage{
   display:grid; justify-items:center; align-content:start;
