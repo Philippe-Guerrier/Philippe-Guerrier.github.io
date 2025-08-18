@@ -49,9 +49,9 @@ _Last updated: 2025-08-17_
 - **Web/General**: HTML/CSS/JS, Markdown, VS Code.
 
 ## Profiles & links
-- **Portfolio (Google Sites)**: https://sites.google.com/view/philippeguerrier/
-- **GitHub Pages**: https://philippe-guerrier.github.io/
-- **LinkedIn**: https://www.linkedin.com/in/philippe-guerrier1/
+- **Portfolio (Google Sites)**: [https://sites.google.com/view/philippeguerrier/](https://sites.google.com/view/philippeguerrier/)
+- **GitHub Pages**: [https://philippe-guerrier.github.io/](https://philippe-guerrier.github.io/)
+- **LinkedIn**: [https://www.linkedin.com/in/philippe-guerrier1/](https://www.linkedin.com/in/philippe-guerrier1/)
 
 ---
 
