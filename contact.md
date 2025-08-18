@@ -13,15 +13,11 @@ permalink: /contact/
 - Portfolio: <https://sites.google.com/view/philippeguerrier/home>
 
 
-<section class="contact-hero">
-  <h1>Don't hesitate to contact me!</h1>
-  <p>Pick up the envelope to reveal the goods.</p>
-</section>
 
 <!-- Origami envelope -->
 <section class="contact-hero">
   <h1>Don't hesitate to contact me!</h1>
-  <p>Pick up the envelope to reveal the interesting info</p>
+  <p>   Pick up the envelope to reveal the interesting info</p>
 </section>
 
 <!-- Origami envelope (centered, animated, theme-aware) -->
