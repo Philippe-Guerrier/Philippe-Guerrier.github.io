@@ -88,7 +88,7 @@ html[data-theme="dark"]{
 /* ===== Layout ===== */
 .contact-hero{text-align:center;margin:14px 0 8px}
 .contact-hero h1{margin:0}
-.contact-hero p{opacity:.85;margin:.25rem 0 0; text-indent:4ch}
+.contact-hero p{opacity:.85;margin:.25rem 0 0; text-indent:8ch}
 
 .env-stage{
   display:grid; justify-items:center; align-content:start;
