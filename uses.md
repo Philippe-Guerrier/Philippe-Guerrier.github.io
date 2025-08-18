@@ -52,6 +52,7 @@ _Last updated: 2025-08-17_
 - **Portfolio (Google Sites)**: [https://sites.google.com/view/philippeguerrier/](https://sites.google.com/view/philippeguerrier/)
 - **GitHub Pages**: [https://philippe-guerrier.github.io/](https://philippe-guerrier.github.io/)
 - **LinkedIn**: [https://www.linkedin.com/in/philippe-guerrier1/](https://www.linkedin.com/in/philippe-guerrier1/)
+- **GitHub**: [https://github.com/Philippe-Guerrier](https://github.com/Philippe-Guerrier)
 
 ---
 
