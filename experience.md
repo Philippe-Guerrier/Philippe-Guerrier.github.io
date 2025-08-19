@@ -12,15 +12,15 @@ permalink: /experience/
 **Apr 2025 – Sep 2025 · Paris (Hybrid)**  
 - SQL, Python, Airflow  
 - Dashboard development  
-- Product & Operations analytics  
+- Marketing & Operations analytics  
 
 ---
 
 ### Uber — Data Analytics, Logistics & Operations (Intern)  
 **Oct 2023 – Mar 2024 · Paris (Hybrid)**  
 - Built analyses in SQL/Python  
-- Applied regression, ML, and optimization to support operations  
-- Improved driver and customer experience through data-driven insights  
+- Applied regression, ML, Operations Analytics, and optimization to support operations  
+- Improved driver experience through data-driven insights  
 
 ---
 
