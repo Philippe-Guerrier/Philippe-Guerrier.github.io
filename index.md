@@ -16,10 +16,11 @@ permalink: /
   Repo: <https://github.com/Philippe-Guerrier/pulseflow-ai-offline-music-recommender>
 - **Scrape‑LLM (local)** - Lightweight scraper + local LLM/vision for concise page summaries & image sampling (Ollama/HF).  
   Repo: <https://github.com/Philippe-Guerrier/scrape-llm>
-- **Artificial Intelligence in Medicine and Pharmaceuticals** - SynthMolVAE: Gen AI for Drug Discovery + Molecule Generation using Variational Autoencoders (VAE).  
-  Portfolio: <https://sites.google.com/view/philippeguerrier/ai-in-medicine-and-pharmaceuticals>
 - **Market Sentiment Dashboard** - Real‑time news+Reddit pipeline with parallel sentiment and short write‑ups.  
   Repo: <https://github.com/Philippe-Guerrier/Real-Time-AI-Powered-Market-Sentiment-Dashboard>
+#
+- **Artificial Intelligence in Medicine and Pharmaceuticals** - SynthMolVAE: Gen AI for Drug Discovery + Molecule Generation using Variational Autoencoders (VAE).  
+  Portfolio: <https://sites.google.com/view/philippeguerrier/ai-in-medicine-and-pharmaceuticals>
 - **Quantum Computing** - Quantum K-mean + Quantum Computing for Monte Carlo Simulation.  
   Portfolio: <https://sites.google.com/view/philippeguerrier/quantum-computing-portfolio>
 
