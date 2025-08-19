@@ -18,7 +18,8 @@ permalink: /
   Repo: <https://github.com/Philippe-Guerrier/scrape-llm>
 - **Market Sentiment Dashboard** - Real‑time news+Reddit pipeline with parallel sentiment and short write‑ups.  
   Repo: <https://github.com/Philippe-Guerrier/Real-Time-AI-Powered-Market-Sentiment-Dashboard>
-#
+
+## Portfolio Highlights
 - **Artificial Intelligence in Medicine and Pharmaceuticals** - SynthMolVAE: Gen AI for Drug Discovery + Molecule Generation using Variational Autoencoders (VAE).  
   Portfolio: <https://sites.google.com/view/philippeguerrier/ai-in-medicine-and-pharmaceuticals>
 - **Quantum Computing** - Quantum K-mean + Quantum Computing for Monte Carlo Simulation.  
