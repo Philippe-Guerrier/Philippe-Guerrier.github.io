@@ -18,7 +18,7 @@ I enjoy offline-first ML (resource-aware, explainable components), clean interfa
 
 - **M.Sc. Data Science & Business**, Université Paris Dauphine - PSL (2024–2025)
 - **M.Sc. Data Science - Strategy & Competitive Intelligence**, Panthéon-Sorbonne (2022–2024)
-- Prior studies in Finance/Econ & Data Science (Paris-Saclay; Bielefeld)
+- Prior studies in Finance/Economy & Data Science (Paris-Saclay; Bielefeld)
 
 ### Interests
 
